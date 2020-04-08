@@ -5,4 +5,4 @@ Team Members: Peter Wright,
 
 (schedule subject to change)
 
-<img width="896" alt="Screen Shot 2020-04-08 at 10 01 01 AM" src="https://user-images.githubusercontent.com/44282168/78812228-ef405680-797f-11ea-8bb1-f5a5822cb214.png">
+<img width="450" alt="Screen Shot 2020-04-08 at 10 04 31 AM" src="https://user-images.githubusercontent.com/44282168/78812572-77266080-7980-11ea-96d1-51698747be1f.png">
