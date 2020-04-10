@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd BackEnd && node server.js"
+    "start": "cd BackEnd && node server.js",
+    "client": "cd FrontEnd",
+    "heroku-prebuild": "cd BackEnd && npm install && cd .."
   },
   "repository": {
     "type": "git",
@@ -16,11 +18,5 @@
   "bugs": {
     "url": "https://github.com/pWr1ght/Share-Rent-Buy-Portal/issues"
   },
-  "homepage": "https://github.com/pWr1ght/Share-Rent-Buy-Portal#readme",
-  "dependencies": {
-    "express": "^4.17.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.3"
-  }
+  "homepage": "https://github.com/pWr1ght/Share-Rent-Buy-Portal#readme"
 }
