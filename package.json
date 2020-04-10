@@ -4,7 +4,8 @@
   "description": "Project: An online portal to share/rent/buy items. Search results on an item have a restriction. If the closest location to find an item is x, then the search results will contain items within x+10 miles radius from the entered location.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "cd BackEnd && node server.js"
   },
   "repository": {
     "type": "git",
