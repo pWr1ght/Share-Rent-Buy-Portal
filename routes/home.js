@@ -4,6 +4,7 @@ module.exports = function () {
 
     /* This function extracts the current non-expired listings and renders the home page with the data.*/
     function serveHome(req, res, next) {
+        
         var context={
             "resp": "Your home page"
         }
