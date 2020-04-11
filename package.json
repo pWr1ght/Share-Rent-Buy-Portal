@@ -13,10 +13,18 @@
     "type": "git",
     "url": "git+https://github.com/pWr1ght/Share-Rent-Buy-Portal.git"
   },
-  "author": "",
+  "author": "Dudes in Quarantine",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/pWr1ght/Share-Rent-Buy-Portal/issues"
   },
-  "homepage": "https://github.com/pWr1ght/Share-Rent-Buy-Portal#readme"
+  "homepage": "https://github.com/pWr1ght/Share-Rent-Buy-Portal#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.3",
+    "express-session": "^1.17.0",
+    "multer": "^1.4.2",
+    "mysql": "^2.18.1"
+  }
 }
