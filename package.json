@@ -9,8 +9,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd BackEnd && node server.js",
-    "client": "cd FrontEnd",
+    "start": "node main.js",
     "heroku-prebuild": "cd BackEnd && npm install && cd .."
   },
   "repository": {

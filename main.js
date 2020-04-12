@@ -16,7 +16,7 @@ app.engine('handlebars', handlebars.engine);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use('/static', express.static('public')); //Allow use of static files
 app.set('view engine', 'handlebars'); //Use Handlebars templates
-app.set('port', process.argv[2]);  //Accept port from the commandline 
+app.set('port', process.argv[2] || 3344 );  //Accept port from the commandline 
 app.set('mysql', mysql);  //Use MySql DB engine
 app.use(express.static(path.join(__dirname, '/public'))); //Specify static files routes
 app.use(express.static(path.join(__dirname, '/uploads')));
