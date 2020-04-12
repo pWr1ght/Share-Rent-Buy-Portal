@@ -8,7 +8,7 @@
   },
 
   "scripts": {
-    "heroku-prebuild": "npm install"
+    "start": "node main.js"
   },
   "repository": {
     "type": "git",
