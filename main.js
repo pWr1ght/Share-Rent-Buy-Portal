@@ -24,7 +24,6 @@ app.use(express.static(path.join(__dirname, '/public'))); //Specify static files
 app.use(express.static(path.join(__dirname, '/uploads')));
 
 //Specify routes
-
 app.use('/', require('./routes/home.js'));
 
 //Go here when 404
