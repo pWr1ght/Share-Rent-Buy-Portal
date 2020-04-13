@@ -62,5 +62,5 @@ module.exports = function () {
     router.get('/', serveLocate); 
     router.post('/', getCoord);
     router.post('/get-near-places', getNearbyPl);
-    return router; //Branch test
+    return router; //Branch test II
 }();
