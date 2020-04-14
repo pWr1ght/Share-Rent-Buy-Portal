@@ -79,7 +79,7 @@
         var city = document.getElementById("City").value;
         var state = document.getElementById("State").value;
         var zip = document.getElementById("Zip").value;
-        var url = "http://nominatim.openstreetmap.org";
+        var url = "https://nominatim.openstreetmap.org";
         var search = "/search?q=" + street + ",+" + city + "+" + state + "+" + zip + "+&format=json&polygon=0"
         var payload = {
             Url: url,
