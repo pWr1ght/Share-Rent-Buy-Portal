@@ -11,6 +11,7 @@ module.exports = function () {
         res.render('locate', context);
     }
 
+    //Gets the distance and time from user to the listed item
     function getCoord(req, res, next) {
         const g_api = config.gmaps_key;
         var g_url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="
@@ -41,16 +42,15 @@ module.exports = function () {
         getData(g_url);
     }
 
-    function getNearbyPl(){
+    // Gets user's city and nearby cities
+    function getNearbyPl(req, res, next){
+        var url = "http://api.geonames.org/findNearbyPlaceNameJSON?lat=" + req.body.lat+ "&lng=" + req.body.lon + "&cities=cities5000&radius=200&username=cs361dq2020";
         
-        var url = "http://api.geonames.org/findNearbyPlaceNameJSON?lat=47.3&lng=9&username=cs361dq2020";
         var getData = async url => {
             try {
                 var response = await fetch(url);
-                var data = await response.json();
-
-                context = {  }
-                res.send(JSON.stringify(context));
+                var cities = await response.json();
+                res.send(JSON.stringify(cities));
             } catch (error) {
                 console.log(error);
             }
