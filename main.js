@@ -41,7 +41,7 @@ app.use(express.static(path.join(__dirname, '/public'))); //Specify static files
 app.use(express.static(path.join(__dirname, '/uploads')));
 app.use(flash())
 app.use(session({
-  secret: "superdupersecretpassword", //process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }))
