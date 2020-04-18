@@ -7,6 +7,7 @@ module.exports = function () {
     function serveHome(req, res, next) {
         
         var context = {}
+        
         context.items = {
             "cont": {"Id": "1",
             "CategoryId": "1",
@@ -42,6 +43,13 @@ module.exports = function () {
             "Lon":"-117.2609424"
             }
         }
+        
+        if (req.isAuthenticated()) {
+            context.auth = "Authenticated User";
+        } else {
+            context.auth = "Unkown User";
+        }
+
         res.render('home', context);    
     }
 
