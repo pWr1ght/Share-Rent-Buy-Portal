@@ -8,11 +8,7 @@ var handlebars = require('express-handlebars').create({
 });
 
 // configure the app to use bodyParser()
-app.use(
-	bodyParser.urlencoded({
-		extended: true
-	})
-);
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.engine('handlebars', handlebars.engine);
 app.use(bodyParser.urlencoded({ extended: true }));
