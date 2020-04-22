@@ -45,11 +45,8 @@ module.exports = function () {
         }
         
         if (req.isAuthenticated()) {
-            context.auth = "Authenticated User";
-        } else {
-            context.auth = "Unkown User";
-        }
-
+            context.auth = req.user.name;
+        } 
         res.render('home', context);    
     }
 

@@ -17,6 +17,10 @@
 </head>
 
 <body>
+    <div hidden>
+        <input type="text" class="form-control" id="user_lat">
+        <input type="text" class="form-control" id="user_lon">  
+    </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">Dudes in<br>Quarantine</a><span style="min-width: 3rem;"></span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -46,17 +50,31 @@
                     </div>
                 </li>
                 <li class="nav-item text-center">
-                    
+
                 </li>
             </ul>
-            <a id="currLoc" class="nav-link" href="#">Features</a>
+            {{#if this.auth}}
+            <a>Welcome {{this.auth}}</a>
+            <form action="/logout?_method=DELETE" method="POST" class="form-inline ">
+                <button class="btn " type="submit">Log Out</button>
+            </form>
+            {{else}}
+            <form action="/login" method="GET" class="form-inline ">
+                <button class="btn " type="submit">Login</button>
+            </form>
+            <form action="/register" method="GET" class="form-inline ">
+                <button class="btn " type="submit">Register</button>
+            </form>
+            {{/if}}
+            
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
+            <a id="currLoc" class="nav-link" href="#"></a>
         </div>
     </nav>
-
+    {{{body}}}
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -67,13 +85,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-    {{!-- <script src="scripts/scripts.js"></script> --}}
+    <script src="scripts/scripts.js"></script>
 
-
-    <!--<div class="container-fluid">
-        {{{body}}}
-    </div> -->
-    {{{body}}}
+    
 
 </body>
 

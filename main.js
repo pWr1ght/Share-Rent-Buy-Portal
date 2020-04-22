@@ -12,24 +12,12 @@ const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
 const methodOverride = require('method-override');
-const handlebars = require('express-handlebars').create({
-	defaultLayout: 'main'
-});
-
+const handlebars = require('express-handlebars').create({defaultLayout: 'main'});
 const initializePassport = require('./passport-config')
-initializePassport(
-  passport,
-  email => users.find(user => user.email === email),
-  id => users.find(user => user.id === id)
-);
+const mngUsers = require('./modules/users.js');
 
-const users = [];
 // configure the app to use bodyParser()
-app.use(
-	bodyParser.urlencoded({
-		extended: true
-	})
-);
+app.use(bodyParser.urlencoded({	extended: true}));
 app.use(bodyParser.json());
 app.engine('handlebars', handlebars.engine);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -45,13 +33,28 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
+
+// Load users from the data base for authenticaion and store them in the users variable
+var users = [];
+(() =>{ 
+  function initUsers(result){
+    users = JSON.parse(result);
+  }
+  mngUsers.data.getUsers(initUsers);
+})();
+
+// Used in authentication
+initializePassport(
+  passport,
+  email => users.find(user => user.email === email),
+  id => users.find(user => user.id === id)
+);
 app.use(passport.initialize())
-app.use(passport.session())
-app.use(methodOverride('_method'))
+app.use(passport.session()) 
+app.use(methodOverride('_method')) // Allows use of action="/logout?_method=DELETE" method="POST" in logout form
 
 //Specify routes
 app.get('/login', checkNotAuthenticated, (req, res) => {
-  
   res.render('login')
 })
 
@@ -66,21 +69,14 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 })
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10)
-    users.push({
-      id: Date.now().toString(),
-      name: req.body.name,
-      email: req.body.email,
-      password: hashedPassword
-    })
-    res.redirect('/login')
-  } catch {
-    res.redirect('/register')
+  function complete(input) {
+    users.push(input);
+    res.render('login')
   }
+  mngUsers.data.registerUser(req, res, mysql, complete);
 })
 
-app.delete('/logout', (req, res) => {
+app.delete('/logout', checkAuthenticated, (req, res) => {
   req.logOut()
   res.redirect('/login')
 })
@@ -105,7 +101,6 @@ function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next()
   }
-
   res.redirect('/login')
 }
 

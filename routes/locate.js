@@ -1,5 +1,5 @@
 module.exports = function () {
-    var express = require('express');``
+    var express = require('express');
     const fetch = require("node-fetch");
     const config = require('../keys.json');
     var router = express.Router();
