@@ -3,7 +3,7 @@ var methods = {
 	// Results are stringified into JSON and returned to the calling function
 	getUsers: function(complete) {
 		const mysql = require('./dbcon');
-		var usersQuery = 'Describe Users';
+		var usersQuery = 'SELECT * FROM Users';
 		function returnUsers(err, rows, fields) {
 			if (err) {
 				console.log(err);
