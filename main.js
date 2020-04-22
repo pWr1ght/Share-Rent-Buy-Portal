@@ -7,6 +7,9 @@ var handlebars = require('express-handlebars').create({
 	defaultLayout: 'main'
 });
 
+//add dotenv functionality
+require('dotenv').config();
+
 // configure the app to use bodyParser()
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());

@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     getBrowserLocation(function (){
         getDistances();
+        getNearby();
     });
     
   });
@@ -13,6 +14,35 @@ function getDistances(){
     }
 }
 
+function getNearby(){
+    var userLat = document.getElementById("user_lat").value ;
+    var userLon = document.getElementById("user_lon").value;
+
+    payload = {
+        lat: userLat,
+        lon: userLon
+    }
+    
+    var req = new XMLHttpRequest();
+    req.open('POST', '/locate/get-near-places' , true)
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.addEventListener('load', function () {
+        //Process response
+        if (req.status >= 200 && req.status < 400) {
+            var resp = JSON.parse(req.responseText);
+            
+            const currLocation = resp.geonames[0].name? resp.geonames[0].name + ", " + resp.geonames[0].adminCode1 : " ";
+            document.getElementById("currLoc").innerText = currLocation;
+            // for (let index = 0; index < resp.geonames.length; index++) {
+            //     console.log(resp.geonames[index].name + ", " + resp.geonames[index].adminCode1);
+            // } 
+                
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send(JSON.stringify(payload));
+}
 
 function getDist(id){
     var destLat = document.getElementById(id + "-lat").innerHTML;
