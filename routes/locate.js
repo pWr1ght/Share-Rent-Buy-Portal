@@ -1,9 +1,7 @@
-module.exports = (function() {
-	var express = require('express');
-	``;
-	const fetch = require('node-fetch');
-	const config = require('../keys.json');
-	var router = express.Router();
+module.exports = function () {
+    var express = require('express');
+    const fetch = require("node-fetch");
+    var router = express.Router();
 
 	/* This function extracts the current non-expired listings and renders the home page with the data.*/
 	function serveLocate(req, res, next) {
@@ -13,7 +11,7 @@ module.exports = (function() {
 
 	//Gets the distance and time from user to the listed item
 	function getCoord(req, res, next) {
-		const g_api = config.gmaps_key;
+		
 		var g_url =
 			'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=' +
 			req.body.userLat +
@@ -74,4 +72,4 @@ module.exports = (function() {
 	router.post('/', getCoord);
 	router.post('/get-near-places', getNearbyPl);
 	return router; //Branch test II
-})();
+}();
