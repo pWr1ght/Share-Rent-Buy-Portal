@@ -19,7 +19,6 @@ require('dotenv').config();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.engine('handlebars', handlebars.engine);
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/static', express.static('public')); //Allow use of static files
 app.set('view engine', 'handlebars'); //Use Handlebars templates
 app.set('port', process.env.PORT || 3344); //Accept port from the commandline
@@ -86,8 +85,12 @@ app.delete('/logout', checkAuthenticated, (req, res) => {
 	res.redirect('/login');
 });
 
+// app.get('/addItem', function(req, res) {
+// 	res.render('addNewItem');
+// });
+
+app.use('/', require('./routes/index.js'));
 app.use('/locate', require('./routes/locate.js'));
-app.use('/', require('./routes/home.js'));
 
 //Go here when 404
 app.use(function(req, res) {
