@@ -10,25 +10,33 @@ document.getElementById('addItemSubmit').addEventListener('click', (event) => {
 	let zip = document.getElementById('zip').value;
 	var lat = 0;
 	var long = 0;
-
-	if ('geolocation' in navigator) {
-		navigator.geolocation.getCurrentPosition((position) => {
-			console.log(position);
-			lat = position.coords.latitude;
-			long = position.coords.longitude;
-			console.log(lat, long);
-			data = { name, description, price, sell_type, phone, address, city, state, zip, lat, long };
-			fetch('/api/addNewItem', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(data)
-			})
-				.then((data1) => {
-					return data1.json();
-				})
-				.then((data) => console.log(data));
-		});
+	var data = { name, description, price, sell_type, phone, address, city, state, zip, lat, long };
+	if (!name || !description || !price || !phone || !address || !city || !state || !zip) {
+		console.log('Error1 Please fill out all fields', data);
+		return { error1: 'No fields should be empty.', data };
 	} else {
-		console.log('Error');
+		if ('geolocation' in navigator) {
+			navigator.geolocation.getCurrentPosition((position) => {
+				lat = position.coords.latitude;
+				long = position.coords.longitude;
+				data.lat = lat;
+				data.long = long;
+				fetch('/api/addNewItem', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(data)
+				})
+					.then((data1) => {
+						var node = document.getElementById('divInForm');
+						let newElement = (document.createElement('h3').innerText = 'New Item Added');
+						node.replaceWith(newElement);
+						window.location.href = '/';
+						return data1;
+					})
+					.catch((err) => console.log(err));
+			});
+		} else {
+			console.log('Error');
+		}
 	}
 });
