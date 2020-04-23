@@ -4,7 +4,6 @@ const pool = require('../modules/dbcon').pool;
 
 router.post('/addNewItem', (req, res, next) => {
 	var { name, description, price, phone, address, city, state, zip, lat, long } = req.body;
-	console.log(req.body);
 	if (!name || !description || !price || !phone || !address || !city || !state || !zip) {
 		res.send({ error1: 'No fields should be empty.' });
 		return;
