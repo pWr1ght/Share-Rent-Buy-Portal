@@ -13,7 +13,6 @@ router.post('/addNewItem', async (req, res, next) => {
 		return;
 	} else {
 		var addressString = address + ', ' + city + ', ' + state;
-		console.log(addressString);
 		addressString = addressString.replace(/\s/g, '+');
 		var results;
 		await fetch(
@@ -45,7 +44,6 @@ router.get('/search', (req, res) => {
 	var lat = req.query.lat;
 	var long = req.query.long;
 	var item = req.query.search;
-	console.log(lat, long);
 	pool.query(
 		'SELECT *, ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat)) * .000621371192 as distance FROM Items WHERE ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat))* .000621371192 < 50 ORDER BY DISTANCE ASC LIMIT 1',
 		[ long, lat, long, lat ],
