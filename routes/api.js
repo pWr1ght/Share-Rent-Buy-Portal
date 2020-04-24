@@ -1,15 +1,32 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../modules/dbcon').pool;
+const fetch = require('node-fetch');
+//add dotenv functionality
+require('dotenv').config();
 
 //Add new item API
-router.post('/addNewItem', (req, res, next) => {
+router.post('/addNewItem', async (req, res, next) => {
 	var { name, description, price, phone, address, city, state, zip, lat, long } = req.body;
 	if (!name || !description || !price || !phone || !address || !city || !state || !zip) {
 		res.send({ error1: 'No fields should be empty.' });
 		return;
 	} else {
-		pool.query('SELECT ');
+		var addressString = address + ', ' + city + ', ' + state;
+		console.log(addressString);
+		addressString = addressString.replace(/\s/g, '+');
+		var results;
+		await fetch(
+			`https://maps.googleapis.com/maps/api/geocode/json?address=${addressString}&key=${process.env
+				.GOOGLE_API_KEY}`
+		)
+			.then((data) => {
+				return data.json();
+			})
+			.then((data) => {
+				lat = data.results[0].geometry.location.lat;
+				long = data.results[0].geometry.location.lng;
+			});
 		pool.query(
 			'INSERT INTO Items (itemName, itemDescription, itemPrice, itemPhone, itemAddress, itemCity, itemState, itemZip, itemLat, itemLong) VALUES (?,?,?,?,?,?,?,?,?,?)',
 			[ name, description, price, phone, address, city, state, zip, lat, long ],
