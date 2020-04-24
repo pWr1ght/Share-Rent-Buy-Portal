@@ -9,6 +9,7 @@ router.post('/addNewItem', (req, res, next) => {
 		res.send({ error1: 'No fields should be empty.' });
 		return;
 	} else {
+		pool.query('SELECT ');
 		pool.query(
 			'INSERT INTO Items (itemName, itemDescription, itemPrice, itemPhone, itemAddress, itemCity, itemState, itemZip, itemLat, itemLong) VALUES (?,?,?,?,?,?,?,?,?,?)',
 			[ name, description, price, phone, address, city, state, zip, lat, long ],
@@ -27,12 +28,13 @@ router.get('/search', (req, res) => {
 	var lat = req.query.lat;
 	var long = req.query.long;
 	var item = req.query.search;
+	console.log(lat, long);
 	pool.query(
 		'SELECT *, ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat)) * .000621371192 as distance FROM Items WHERE ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat))* .000621371192 < 50 ORDER BY DISTANCE ASC LIMIT 1',
 		[ long, lat, long, lat ],
 		(err, result) => {
 			if (!result) {
-				res.send({ searchResult: null });
+				res.send({ searchResult: null, msg: 'No items within 50 miles' });
 				return;
 			}
 			var itemInfo = result[0];
