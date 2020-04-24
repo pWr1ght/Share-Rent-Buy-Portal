@@ -15,10 +15,8 @@ const methodOverride = require('method-override');
 const handlebars = require('express-handlebars').create({defaultLayout: 'main'});
 const initializePassport = require('./passport-config')
 const mngUsers = require('./modules/users.js');
-
 //add dotenv functionality
 require('dotenv').config();
-
 // configure the app to use bodyParser()
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -37,7 +35,7 @@ app.use(session({
   saveUninitialized: false
 }))
 
-// Load users from the data base for authenticaion and store them in the users variable
+// Load users from the data base for authenticaion and store them in the users array
 var users = [];
 (() =>{ 
   function initUsers(result){
@@ -81,7 +79,7 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
 
 app.delete('/logout', checkAuthenticated, (req, res) => {
   req.logOut()
-  res.redirect('/login')
+  res.redirect('/')
 })
 
 app.use('/locate', require('./routes/locate.js'));
