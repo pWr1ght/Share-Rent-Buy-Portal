@@ -16,7 +16,7 @@ const mngUsers = require('./modules/users.js');
 require('dotenv').config();
 
 // configure the app to use bodyParser()
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.engine('handlebars', handlebars.engine);
 app.use('/static', express.static('public')); //Allow use of static files
