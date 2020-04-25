@@ -90,7 +90,7 @@ app.delete('/logout', checkAuthenticated, (req, res) => {
 // });
 
 app.use('/', require('./routes/index.js'));
-app.use('/edititem', require('./routes/edititem.js'));
+app.use('/edititem', require('./routes/editItem.js'));
 
 //Go here when 404
 app.use(function(req, res) {

@@ -8,7 +8,7 @@ module.exports = function () {
 	function renderItems(req, res, next) {
         function setItems(data){
             console.log(data);
-            res.render('edititem', {data});
+            res.render('editItem', {data});
         }
 		var context = get_set_items.data.getUsersItems(req.user.id, setItems) ;
 	}
