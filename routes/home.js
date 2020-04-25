@@ -45,7 +45,7 @@ module.exports = function () {
         }
         
         if (req.isAuthenticated()) {
-            context.auth = req.user.name;
+            context.auth = req.user;
         } 
         res.render('home', context);    
     }

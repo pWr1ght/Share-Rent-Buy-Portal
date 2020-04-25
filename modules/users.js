@@ -50,8 +50,8 @@ var methods = {
 				return;
 			} else if (rows.length == 0) {
 				var insert =
-					'INSERT INTO Users (firstName, lastName, userPassword, userEmail, userPhone) VALUES (?, ?, ?, ?, ?)';
-				var values = [ req.body.fname, req.body.lname, hashedPassword, req.body.email, req.body.phone ];
+					'INSERT INTO Users (firstName, lastName, userPassword, userEmail, userPhone, userRole) VALUES (?, ?, ?, ?, ?, ?)';
+				var values = [ req.body.fname, req.body.lname, hashedPassword, req.body.email, req.body.phone, 'Admin' ];
 
 				//Save user in DB
 				function insertUser(err, result) {

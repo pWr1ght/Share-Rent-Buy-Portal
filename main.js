@@ -70,6 +70,8 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 	res.render('register');
 });
 
+app.use('/locate', require('./routes/locate.js'));
+
 app.post('/register', checkNotAuthenticated, async (req, res) => {
 	function complete(input) {
 		users.push(input);
@@ -88,7 +90,7 @@ app.delete('/logout', checkAuthenticated, (req, res) => {
 // });
 
 app.use('/', require('./routes/index.js'));
-app.use('/locate', require('./routes/locate.js'));
+app.use('/edititem', require('./routes/edititem.js'));
 
 //Go here when 404
 app.use(function(req, res) {

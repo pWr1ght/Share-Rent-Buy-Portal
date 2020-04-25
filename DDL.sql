@@ -6,7 +6,8 @@ CREATE TABLE Users (
     lastName VARCHAR(255) NOT NULL, 
     userPassword VARCHAR(255) NOT NULL, 
     userEmail VARCHAR(255) NOT NULL, 
-    userPhone VARCHAR(15), 
+    userPhone VARCHAR(15),
+    userRole VARCHAR(15), 
     PRIMARY KEY (userID) 
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -52,4 +53,7 @@ CREATE TABLE `Attachments` (
     CONSTRAINT `fk_items_item_id` FOREIGN KEY (`itemID`)  REFERENCES `Items` (`itemID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
+CREATE TRIGGER tr_user_dtjoined
+BEFORE INSERT
+ON Users FOR EACH ROW
+ SET NEW.dateJoined = DATE.NOW()

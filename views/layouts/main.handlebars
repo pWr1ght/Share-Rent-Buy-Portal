@@ -38,16 +38,12 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Manage
+                        Listings
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/createList">Do Something</a>
-
+                        <a class="dropdown-item" href="/addItem">Post New</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Link1</a>
-                        <a class="dropdown-item" href="#">Link2</a>
-                        <a class="dropdown-item" href="#">Link3</a>
-                        <a class="dropdown-item" href="#">Link4</a>
+                        <a class="dropdown-item" href="/edititem">My Items</a>
                     </div>
                 </li>
                 <li class="nav-item text-center">
@@ -55,7 +51,7 @@
                 </li>
             </ul>
             {{#if this.auth}}
-            <a>Welcome {{this.auth}}</a>
+            <a>Welcome {{this.auth.name}}</a>
             <form action="/logout?_method=DELETE" method="POST" class="form-inline ">
                 <button class="btn " type="submit">Log Out</button>
             </form>
