@@ -51,7 +51,14 @@ var methods = {
 			} else if (rows.length == 0) {
 				var insert =
 					'INSERT INTO Users (firstName, lastName, userPassword, userEmail, userPhone, userRole) VALUES (?, ?, ?, ?, ?, ?)';
-				var values = [ req.body.fname, req.body.lname, hashedPassword, req.body.email, req.body.phone, 'Admin' ];
+				var values = [
+					req.body.fname,
+					req.body.lname,
+					hashedPassword,
+					req.body.email,
+					req.body.phone,
+					'Admin'
+				];
 
 				//Save user in DB
 				function insertUser(err, result) {
@@ -59,6 +66,7 @@ var methods = {
 						console.log(JSON.stringify(err));
 						res.end();
 					}
+					console.log(result);
 					var getUsersQuery = 'SELECT * FROM Users WHERE userID = ? LIMIT 1';
 					var val = [ result.insertId ]; // Id of user who was just saved to db
 					mysql.pool.query(getUsersQuery, val, function(err, rows) {

@@ -85,10 +85,6 @@ app.delete('/logout', checkAuthenticated, (req, res) => {
 	res.redirect('/login');
 });
 
-// app.get('/addItem', function(req, res) {
-// 	res.render('addNewItem');
-// });
-
 app.use('/', require('./routes/index.js'));
 app.use('/edititem', require('./routes/editItem.js'));
 
