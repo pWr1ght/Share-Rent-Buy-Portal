@@ -33,10 +33,11 @@ module.exports = function () {
                         "State":rows[row].itemState,
                         "ZipCode":rows[row].itemZip,
                         "Lat":rows[row].itemLat,
-                        "Lon":rows[row].itemlong
+                        "Lon":rows[row].itemLong
                     };
                     items.push(item);
                 }
+                console.log(items)
                 context.items = items;
             }
             
