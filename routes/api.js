@@ -57,6 +57,7 @@ router.post('/search', (req, res) => {
 	var lat = req.body.lat;
 	var long = req.body.long;
 	var item = req.body.search;
+	console.log(item, lat, long);
 	try {
 		pool.query(
 			'SELECT *, ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat)) * .000621371192 as distance FROM Items WHERE ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat))* .000621371192 < 50 AND itemName COLLATE UTF8_GENERAL_CI LIKE ? ORDER BY DISTANCE ASC LIMIT 1',
@@ -71,18 +72,20 @@ router.post('/search', (req, res) => {
 					return;
 				}
 				var itemInfo = result[0];
+				console.log(itemInfo);
 				pool.query(
-					'SELECT *,ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat)) * .000621371192 as distanceFromSearch,ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat)) * .000621371192 as distanceItemToItem FROM Items WHERE ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat))* .000621371192 < 10 AND itemName COLLATE UTF8_GENERAL_CI LIKE ? ORDER BY distanceFromSearch ASC',
+					'SELECT *, ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat)) * .000621371192 as distanceFromSearch,ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat)) * .000621371192 as distanceItemToItem FROM Items WHERE ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat))* .000621371192 < 10 AND itemName COLLATE UTF8_GENERAL_CI LIKE ? ORDER BY distanceFromSearch ASC',
 					[
 						long,
 						lat,
 						itemInfo.itemLong,
 						itemInfo.itemLat,
-						itemInfo.itemLong,
+						itemInfo.itemlong,
 						itemInfo.itemLat,
 						`%${item}%`
 					],
 					(err2, result2) => {
+						console.log(err2);
 						if (err2) {
 							res.send({ err2, msg: 'Error' });
 						}
