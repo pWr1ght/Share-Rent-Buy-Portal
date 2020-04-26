@@ -76,9 +76,9 @@ router.post('/search', (req, res) => {
 					[
 						long,
 						lat,
-						itemInfo.itemlong,
+						itemInfo.itemLong,
 						itemInfo.itemLat,
-						itemInfo.itemlong,
+						itemInfo.itemLong,
 						itemInfo.itemLat,
 						`%${item}%`
 					],
