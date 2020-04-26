@@ -1,11 +1,11 @@
 module.exports = function () {
     var express = require('express');
     var testItems = require('../modules/testPosts');
+    const pool = require('../modules/dbcon').pool;
     var router = express.Router();
 
     /* This function extracts the current non-expired listings and renders the home page with the data.*/
     function serveHome(req, res, next) {
-        var mysql = req.app.get('mysql');
         var mainQuery = 'SELECT * FROM items LIMIT 6';
         var context = {}
         
@@ -13,7 +13,7 @@ module.exports = function () {
             context.auth = req.user;
         } 
 
-        mysql.pool.query(mainQuery, function(err, rows, fields){
+        pool.query(mainQuery, function(err, rows, fields){
             if(err){
                 context.status = err;
             }else{
