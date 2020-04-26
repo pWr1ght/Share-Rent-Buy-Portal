@@ -6,7 +6,7 @@ module.exports = function () {
 
     /* This function extracts the current non-expired listings and renders the home page with the data.*/
     function serveHome(req, res, next) {
-        var mainQuery = 'SELECT * FROM items LIMIT 6';
+        var mainQuery = 'SELECT * FROM Items';
         var context = {}
         
         if (req.isAuthenticated()) {
