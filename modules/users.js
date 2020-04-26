@@ -3,7 +3,7 @@ var methods = {
 	// Results are stringified into JSON and returned to the calling function
 	getUsers: function(complete) {
 		const mysql = require('./dbcon');
-		var usersQuery = 'Describe Users';
+		var usersQuery = 'SELECT * FROM Users';
 		function returnUsers(err, rows, fields) {
 			if (err) {
 				console.log(err);
@@ -50,8 +50,15 @@ var methods = {
 				return;
 			} else if (rows.length == 0) {
 				var insert =
-					'INSERT INTO Users (firstName, lastName, userPassword, userEmail, userPhone) VALUES (?, ?, ?, ?, ?)';
-				var values = [ req.body.fname, req.body.lname, hashedPassword, req.body.email, req.body.phone ];
+					'INSERT INTO Users (firstName, lastName, userPassword, userEmail, userPhone, userRole) VALUES (?, ?, ?, ?, ?, ?)';
+				var values = [
+					req.body.fname,
+					req.body.lname,
+					hashedPassword,
+					req.body.email,
+					req.body.phone,
+					'Admin'
+				];
 
 				//Save user in DB
 				function insertUser(err, result) {
@@ -59,6 +66,7 @@ var methods = {
 						console.log(JSON.stringify(err));
 						res.end();
 					}
+					console.log(result);
 					var getUsersQuery = 'SELECT * FROM Users WHERE userID = ? LIMIT 1';
 					var val = [ result.insertId ]; // Id of user who was just saved to db
 					mysql.pool.query(getUsersQuery, val, function(err, rows) {

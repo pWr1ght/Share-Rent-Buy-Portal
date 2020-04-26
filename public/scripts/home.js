@@ -1,13 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
 	getBrowserLocation(function() {
-		getDistances();
+		//getDistances();
 	});
+
+	//remove the search function from the navbar
+	document.getElementById("searchNav").innerHTML = "";
+	document.getElementById("input_search_button").onclick = performSearch;
 });
 
 function getDistances() {
 	var ids = document.getElementsByName('elemId').length;
 	console.log('ids: ' + ids);
-	for (let index = 1; index < ids + 1; index++) {
+	for (let index = 1; index < ids + 1; index++) {       //Need to fix, the id doesn't necessarily start from 1
 		getDist(index);
 	}
 }
@@ -39,3 +43,4 @@ function getDist(id) {
 	});
 	req.send(JSON.stringify(payload));
 }
+

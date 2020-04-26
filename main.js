@@ -11,10 +11,8 @@ const methodOverride = require('method-override');
 const handlebars = require('express-handlebars').create({ defaultLayout: 'main' });
 const initializePassport = require('./passport-config');
 const mngUsers = require('./modules/users.js');
-
 //add dotenv functionality
 require('dotenv').config();
-
 // configure the app to use bodyParser()
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -34,7 +32,7 @@ app.use(
 	})
 );
 
-// Load users from the data base for authenticaion and store them in the users variable
+// Load users from the data base for authenticaion and store them in the users array
 var users = [];
 (() => {
 	function initUsers(result) {
@@ -72,6 +70,8 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 	res.render('register');
 });
 
+app.use('/locate', require('./routes/locate.js'));
+
 app.post('/register', checkNotAuthenticated, async (req, res) => {
 	function complete(input) {
 		users.push(input);
@@ -85,12 +85,8 @@ app.delete('/logout', checkAuthenticated, (req, res) => {
 	res.redirect('/login');
 });
 
-// app.get('/addItem', function(req, res) {
-// 	res.render('addNewItem');
-// });
-
 app.use('/', require('./routes/index.js'));
-app.use('/locate', require('./routes/locate.js'));
+app.use('/edititem', require('./routes/editItem.js'));
 
 //Go here when 404
 app.use(function(req, res) {
