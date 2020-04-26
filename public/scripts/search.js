@@ -1,4 +1,7 @@
-document.getElementById('input_search_button').onclick = function (event) {
+document.getElementById('input_search_button').onclick = performSearch;
+
+
+function performSearch(event) {
     event.preventDefault()
     var search = document.getElementById('input_search').value;
     var lat = document.getElementById('user_lat').value

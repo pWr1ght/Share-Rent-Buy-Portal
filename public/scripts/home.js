@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	//remove the search function from the navbar
 	document.getElementById("searchNav").innerHTML = "";
+	document.getElementById("input_search_button").onclick = performSearch;
 });
 
 function getDistances() {
