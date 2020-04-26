@@ -5,49 +5,45 @@ module.exports = function () {
 
     /* This function extracts the current non-expired listings and renders the home page with the data.*/
     function serveHome(req, res, next) {
-        
+        var mysql = req.app.get('mysql');
+        var mainQuery = 'SELECT * FROM items LIMIT 6';
         var context = {}
-        
-        context.items = {
-            "cont": {"Id": "1",
-            "CategoryId": "1",
-            "UserId": "1",
-            "Title": 'Bicycle for rent',
-            "Descr": 'You can rent it',
-            "Price": "25.36",
-            "Phone": "7607896532",
-            "PostDate": '2020-04-11',
-            "ExpDate": '2020-05-25',
-            "Address": "1550 Leucadia Blvd",
-            "City": "Encinitas",
-            "State": "CA",
-            "ZipCode": "92024",
-            "Lat": "33.0691844",
-            "Lon":"-117.266312"
-            },
-            "cont2": {
-            "Id": "2",
-            "CategoryId": "1",
-            "UserId": "1",
-            "Title": 'Scooter for sale',
-            "Descr": 'You can buy it',
-            "Price": "35.15",
-            "Phone": "7607896532",
-            "PostDate": '2020-04-10',
-            "ExpDate": '2020-06-25',
-            "Address": "268 N El Camino Real",
-            "City": "Encinitas",
-            "State": "CA",
-            "ZipCode": "92024",
-            "Lat": "33.0523889",
-            "Lon":"-117.2609424"
-            }
-        }
         
         if (req.isAuthenticated()) {
             context.auth = req.user.name;
         } 
-        res.render('home', context);    
+
+        mysql.pool.query(mainQuery, function(err, rows, fields){
+            if(err){
+                context.status = err;
+            }else{
+                
+                var items = [];
+                for (var row in rows){
+                    let item = {
+                        "Id":rows[row].itemID,
+                        "UserId":rows[row].userID,
+                        "CategoryId":rows[row].catID,
+                        "Title":rows[row].itemName,
+                        "Descr":rows[row].itemDescription,
+                        "Price":rows[row].itemPrice,
+                        "Phone":rows[row].itemPhone,
+                        "Address":rows[row].itemAddress,
+                        "City":rows[row].itemCity,
+                        "State":rows[row].itemState,
+                        "ZipCode":rows[row].itemZip,
+                        "Lat":rows[row].itemLat,
+                        "Lon":rows[row].itemlong
+                    };
+                    items.push(item);
+                }
+                context.items = items;
+            }
+            
+            res.render('home', context);    
+
+        })
+        
     }
 
     /* The routes for homepage */
