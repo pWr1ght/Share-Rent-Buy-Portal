@@ -1,1 +1,1 @@
-GET http://localhost:3344/get-near-places
+GET http://localhost:3344/editItem

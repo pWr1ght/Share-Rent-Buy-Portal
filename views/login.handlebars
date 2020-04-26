@@ -1,6 +1,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-sm-12">
+            {{#if message}}
+                <p>{{this.message}}</p>
+            {{/if}}
             <form action="/login" method="POST">
                 <div class="form-group">
                     <label for="email">Email</label>

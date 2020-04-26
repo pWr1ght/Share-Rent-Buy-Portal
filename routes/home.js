@@ -10,7 +10,7 @@ module.exports = function () {
         var context = {}
         
         if (req.isAuthenticated()) {
-            context.auth = req.user.name;
+            context.auth = req.user;
         } 
 
         mysql.pool.query(mainQuery, function(err, rows, fields){
