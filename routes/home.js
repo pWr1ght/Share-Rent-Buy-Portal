@@ -6,7 +6,7 @@ module.exports = function () {
 
     /* This function extracts the current non-expired listings and renders the home page with the data.*/
     function serveHome(req, res, next) {
-        var mainQuery = 'SELECT * FROM Items';
+        var mainQuery = 'SELECT * FROM Items ORDER BY itemID DESC LIMIT 12';
         var context = {}
         
         if (req.isAuthenticated()) {
@@ -37,7 +37,6 @@ module.exports = function () {
                     };
                     items.push(item);
                 }
-                console.log(items)
                 context.items = items;
             }
             
