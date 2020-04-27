@@ -1,24 +1,37 @@
-#home-header{
-    background-image: linear-gradient(to bottom, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0.7) 100%), url("/classifiedImg.jpg");
-    background-position: center;
-    background-size: cover;
+body{
+  font-family: "Raleway", sans-serif;
+}
 
-<<<<<<< HEAD
+#showcase{
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0.7) 100%), url("/classifiedImg.jpg");
+  background-position: center;
+  background-size: cover;
+  min-height: 500px;
+}
+
+#subhead{
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
+  font-size: xx-large;
+}
+
+
+#showcase div h1{
+  font-family: "Questrial", sans-serif;
 }
 
 .card:hover{
   -webkit-box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
   -moz-box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
   box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
+  transition: 0.5s;
 }
 
 a:hover {
   text-decoration: none;
 }
-=======
-  }
+  
 
-  .disp-card{
-    margin: 2rem;
-  }
->>>>>>> ab574489bc273df00c6186bcabc618fb9e90b516
+.disp-card{
+  margin: 2rem;
+}
