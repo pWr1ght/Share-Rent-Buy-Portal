@@ -8,9 +8,11 @@ const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
 const methodOverride = require('method-override');
-const handlebars = require('express-handlebars').create({ defaultLayout: 'main' });
+const helpers = require('./Utilities/helpers');
+const handlebars = require('express-handlebars').create({ defaultLayout: 'main', helpers: helpers });
 const initializePassport = require('./passport-config');
 const mngUsers = require('./modules/users.js');
+
 //add dotenv functionality
 require('dotenv').config();
 // configure the app to use bodyParser()

@@ -53,6 +53,7 @@ router.post('/addNewItem', async (req, res, next) => {
 });
 
 //Search API
+//Not needed anymore but will keep incase it is
 router.post('/search', (req, res) => {
 	var lat = req.body.lat;
 	var long = req.body.long;
@@ -85,18 +86,22 @@ router.post('/search', (req, res) => {
 					(err2, result2) => {
 						if (err2) {
 							res.send({ err2, msg: 'Error' });
-						}
-						if (result2.length == 0) {
-							res.send({ searchResult: null, empty: 'No search results' });
 							return;
 						}
+
+						if (result2.length == 0) {
+							res.send({ searchResult: result2, msg: 'No items found' });
+							return;
+						}
+						console.log({ searchResult: result2 });
 						res.send({ searchResult: result2 });
 					}
 				);
 			}
 		);
 	} catch (err) {
-		res.status(500).send({ error: err });
+		res.status(500).send('displayItems', { error: err });
+		return;
 	}
 });
 
