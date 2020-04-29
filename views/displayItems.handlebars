@@ -1,29 +1,47 @@
-<h1>
-  Hello
-</h1>
-{{#if searchResult}}
-  <div class="m-auto row">
-    {{#each searchResult}}
-      <div class="col">
-        <div class="card m-auto" style="width: 18rem;">
-          <img src="#" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h4 class="card-title">
-              {{this.itemName}}
-            </h4>
-            <p class="card-text">
-              {{this.itemDescription}}
-            </p>
-            <p>
-              {{distanceFixed this.distanceFromSearch}}
-            </p>
+
+<div class="container-fluid w-75">
+  <h3 class="mt-5 mb-3 mx-auto">
+    Search Results for {{capitalize searchName}}: {{searchResult.length}}
+  </h3>
+  {{#if searchResult}}
+    <div class="row no-gutters justify-content-around">
+      {{#each searchResult}}
+        <div class=" col-auto mb-4 ml-2">
+          <div class="card" style="width: 24rem; min-width:24rem">
+            <img src="#" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h4 class="card-title">
+                <span>
+                  {{itemName}}
+                </span>
+              </h4>
+              <h5>
+                <span>
+                  Price:
+                  ${{distanceFixed itemPrice}}
+                </span>
+              </h5>
+              <p class="card-text">
+                <span>
+                  {{itemDescription}}
+                </span>
+              </p>
+              <p class="text-muted">
+                <span>
+                  {{itemCity}}, 
+                  {{itemZip}}
+                  ({{distanceFixed distanceFromSearch}}
+                  Mi)
+                </span>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    {{else}}
-      <h3>
-        No items
-      </h3>
-    {{/each}}
-  </div>
-{{/if}}
+      {{else}}
+        <h3>
+          No items
+        </h3>
+      {{/each}}
+    </div>
+  {{/if}}
+</div>

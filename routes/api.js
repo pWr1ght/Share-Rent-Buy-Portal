@@ -68,7 +68,7 @@ router.post('/search', (req, res) => {
 					return;
 				}
 				if (result.length == 0) {
-					res.send({ searchResult: null, empty: 'No items within 50 miles' });
+					res.send({ searchResult: result, searchName: item, msg: 'No items found' });
 					return;
 				}
 				var itemInfo = result[0];
@@ -90,11 +90,11 @@ router.post('/search', (req, res) => {
 						}
 
 						if (result2.length == 0) {
-							res.send({ searchResult: result2, msg: 'No items found' });
+							res.send({ searchResult: result2, searchName: item, msg: 'No items found' });
 							return;
 						}
 						console.log({ searchResult: result2 });
-						res.send({ searchResult: result2 });
+						res.send({ searchResult: result2, searchName: item });
 					}
 				);
 			}

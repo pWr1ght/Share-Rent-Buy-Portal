@@ -16,7 +16,11 @@ router.get('/', (req, res, next) => {
 					return;
 				}
 				if (result.length == 0) {
-					res.render('displayItems', { searchResult: null, empty: 'No items within 50 miles' });
+					res.render('displayItems', {
+						searchResult: null,
+						searchName: item,
+						empty: 'No items within 50 miles'
+					});
 					return;
 				}
 				var itemInfo = result[0];
@@ -38,10 +42,14 @@ router.get('/', (req, res, next) => {
 						}
 
 						if (result2.length == 0) {
-							res.render('displayItems', { searchResult: result2, msg: 'No items found' });
+							res.render('displayItems', {
+								searchResult: result2,
+								searchName: item,
+								empty: 'No items found'
+							});
 							return;
 						}
-						res.render('displayItems', { searchResult: result2 });
+						res.render('displayItems', { searchResult: result2, searchName: item });
 						return;
 					}
 				);
