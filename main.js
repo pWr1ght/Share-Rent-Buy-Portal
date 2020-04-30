@@ -88,6 +88,15 @@ app.delete('/logout', checkAuthenticated, (req, res) => {
 app.use('/', require('./routes/index.js'));
 app.use('/edititem', require('./routes/editItem.js'));
 
+//Displaying Item (By PW)
+//suppose to display the selected item based on id
+app.get('/item/:id', function(req, res) {
+	res.render("displayItem");
+});
+// app.get("/item/:id", function(req, res){
+// 	res.render("displayItem")
+// });
+
 //Go here when 404
 app.use(function(req, res) {
 	res.status(404);
