@@ -1,0 +1,21 @@
+
+ <div class="container">
+  <div class="row">
+      <div class="col">
+        <div class="card h-100">
+            <img class="card-img-top" src="..." alt="Replace with Attachement img">
+            <div class="card-body">
+              <h5 class="card-title text-truncate">{{this.Title}}</h5>
+              <p class="card-text">{{this.Descr}}</p>
+              <a class="card-text stretched-link" href="/item/{{this.Id}}"+><small class="text-muted" id="{{this.Id}}_dist">{{this.City}}, {{this.ZipCode}}</small></a>
+              <div class="LatLong" id={{this.Id}} hidden>
+                <span id="{{this.Id}}_lat">{{this.Lat}}</span>
+                <span id="{{this.Id}}_lon">{{this.Lon}}</span>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="col">
+      </div>
+    </div>
+</div>

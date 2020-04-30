@@ -114,6 +114,14 @@ function checkNotAuthenticated(req, res, next) {
 	}
 	next();
 }
+//Displaying Item (By PW)
+//suppose to display the selected item based on id
+app.get('/item/:id', function(req, res) {
+    res.render("displayItem");
+});
+// app.get("/item/:id", function(req, res){
+//  res.render("displayItem")
+// });
 
 //Server
 app.listen(app.get('port'), function() {
