@@ -119,9 +119,6 @@ function checkNotAuthenticated(req, res, next) {
 app.get('/item/:id', function(req, res) {
     res.render("displayItem");
 });
-// app.get("/item/:id", function(req, res){
-//  res.render("displayItem")
-// });
 
 //Server
 app.listen(app.get('port'), function() {
