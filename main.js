@@ -123,8 +123,9 @@ function checkNotAuthenticated(req, res, next) {
 	}
 	next();
 }
-//Displaying Item (By PW)
-//suppose to display the selected item based on id
+//Displaying Item (By PW) 
+//suppose to display the selected item based on id 
+//I would also like incorporate this this in routes (TODO)
 app.get('/item/:id', function(req, res) {
     res.render("displayItem");
 });
