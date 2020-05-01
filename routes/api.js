@@ -53,6 +53,7 @@ router.post('/addNewItem', async (req, res, next) => {
 });
 
 //Search API
+//Not needed anymore but will keep incase it is
 router.post('/search', (req, res) => {
 	var lat = req.body.lat;
 	var long = req.body.long;
@@ -67,7 +68,7 @@ router.post('/search', (req, res) => {
 					return;
 				}
 				if (result.length == 0) {
-					res.send({ searchResult: null, empty: 'No items within 50 miles' });
+					res.send({ searchResult: result, searchName: item, msg: 'No items found' });
 					return;
 				}
 				var itemInfo = result[0];
@@ -85,18 +86,22 @@ router.post('/search', (req, res) => {
 					(err2, result2) => {
 						if (err2) {
 							res.send({ err2, msg: 'Error' });
-						}
-						if (result2.length == 0) {
-							res.send({ searchResult: null, empty: 'No search results' });
 							return;
 						}
-						res.send({ searchResult: result2 });
+
+						if (result2.length == 0) {
+							res.send({ searchResult: result2, searchName: item, msg: 'No items found' });
+							return;
+						}
+						console.log({ searchResult: result2 });
+						res.send({ searchResult: result2, searchName: item });
 					}
 				);
 			}
 		);
 	} catch (err) {
-		res.status(500).send({ error: err });
+		res.status(500).send('displayItems', { error: err });
+		return;
 	}
 });
 
