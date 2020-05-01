@@ -21,6 +21,7 @@ app.use('/static', express.static('public')); //Allow use of static files
 app.set('view engine', 'handlebars'); //Use Handlebars templates
 app.set('port', process.env.PORT || 3344); //Accept port from the commandline
 app.set('mysql', mysql); //Use MySql DB engine
+const pool = require('./modules/dbcon.js').pool;
 app.use(express.static(path.join(__dirname, '/public'))); //Specify static files routes
 app.use(express.static(path.join(__dirname, '/uploads')));
 app.use(flash());
@@ -127,8 +128,23 @@ function checkNotAuthenticated(req, res, next) {
 //suppose to display the selected item based on id 
 //I would also like incorporate this this in routes (TODO)
 app.get('/item/:id', function(req, res) {
-    res.render("displayItem");
+	if (req.isAuthenticated()) {
+	console.log([req.params.id])
+	console.log("hello")
+	}
 });
+	// pool.query('SELECT * FROM Items WHERE EmpID = ?', [req.params.id], (err, rows, fields)=> {
+	// if(!err) {
+	// console.log(rows);
+	// res.send(rows);
+	// }
+	// else {
+	// console.log(err)
+	// }
+	// })
+    // res.render("displayItem");
+
+
 
 //Server
 app.listen(app.get('port'), function() {
