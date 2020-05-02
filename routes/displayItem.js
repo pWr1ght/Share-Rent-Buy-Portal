@@ -132,7 +132,8 @@ module.exports = function () {
         pool.query(sql, (err, result) => {
             if(err) throw err;
             console.log(result)
-            res.send('you queried the database')
+            // res.send('you queried the database')
+            res.render('displayItem', result[0]);
         })
     }); 
     return router;
