@@ -1,107 +1,43 @@
-<div class="h-100 w-100">
-  <div class="m-auto w-25">
-    <h1 class="my-3">
-      Add New Item
-    </h1>
-  </div>
-  <form class="w-25 p-4 m-auto border border-dark rounded" id="addForm">
-    <div id="divInForm">
-      <div class="row m-auto">
-        <label class="" for="name">
-          Item Name
-        </label>
-        <input
-          class="form-control mb-2"
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Item Name"
-        />
-        <label class="" for="description">
-          Item Description
-        </label>
-        <textarea
-          class="form-control mb-2"
-          name="description"
-          id="description"
-          cols="30"
-          rows="10"
-          placeholder="Item Description"
-        ></textarea>
-        <label class="" for="price">
-          Item Price
-        </label>
-        <input
-          class="form-control mb-2"
-          type="text"
-          name="price"
-          id="price"
-          placeholder="Item Price"
-        />
-        <label for="select_buy_choice">
-          Share/Rent/Buy?
-        </label>
-        <select
-          class="form-control mb-2"
-          name="select_buy_choice"
-          id="select_buy_choice"
-        >
-          <option value="">
-            Please select
-          </option>
-          <option value="buy">
-            Buy
-          </option>
-          <option value="rent">
-            Rent
-          </option>
-          <option value="share">
-            Share
-          </option>
-        </select>
-        <label class="" for="phone">
-          Poster's Phone Number
-        </label>
-        <input
-          class="form-control mb-2"
-          type="tel"
-          name="phone"
-          id="phone"
-          placeholder="Phone Number"
-          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-        />
+<div class="container mt-5 shadow px-5 py-2">
+  <div class="display-4 mb-5">Add New Item</div>
+  <form id="addForm">
+    <div id="divInForm" class="form-row">
+      <div class="col-sm-9">
+        <label for="name">Item name</label>
+        <input type="text" class="form-control" name="name" id="name" placeholder="Item Name">
       </div>
-      <div>
-        <div class="row m-auto">
-          <label for="address mb-0">
-            Street Address
-          </label>
-          <input
-            class="form-control mb-2"
-            type="text"
-            name="address"
-            id="address"
-            placeholder="Street Address"
-          />
-        </div>
-        <div class="row m-auto">
-          <div class="col p-0">
-            <label class="mb-2" for="city">
-              City
-            </label>
-            <input
-              class="form-control ml-0"
-              type="text"
-              name="city"
-              id="city"
-              placeholder="City"
-            />
-          </div>
-          <div class="col ml-1">
-            <label class="mb-2" for="state">
-              State
-            </label>
-            <select class="form-control ml-0" id="state" name="state">
+      <div class="col-sm-3">
+        <label for="price">Price</label>
+        <input type="text" class="form-control" name="price" id="price" placeholder="Price">
+      </div>
+      <div class="col-12 mt-2">
+        <label for="description">Item Description</label>
+        <textarea class="form-control" name="description" id="description" rows="10" placeholder="Item Description"></textarea>
+      </div>
+      <div class="col-sm-6 mt-2">
+        <label for="select_buy_choice">Share/Rent/Buy?</label>
+        <select class="form-control" name="select_buy_choice" id="select_buy_choice">
+          <option value>Please Select</option>
+          <option value="buy">Buy</option>
+          <option value="rent">Rent</option>
+          <option value="share">Share</option>
+        </select> 
+      </div>
+      <div class="col-sm-6 mt-2">
+        <label for="phone">Your Phone Number</label>
+        <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone Number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+      </div>
+      <div class="col-12 mt-2">
+        <label for="address">Street Address</label>
+        <input type="text" class="form-control" name="address" id="address" placeholder="Street Address">
+      </div>
+      <div class="col-sm-5 mt-2">
+        <label for="city">City</label>
+        <input type="text" class="form-control" name="city" id="city" placeholder="City">
+      </div>
+      <div class="col-sm-4 mt-2">
+        <label for="state">State</label>
+        <select class="form-control" name="state" id="state">
               <option value="">
                 Please Select...
               </option>
@@ -261,29 +197,57 @@
               <option value="WY">
                 Wyoming
               </option>
-            </select>
-          </div>
-          <div class="col w-25 p-0">
-            <label class="mb-2" for="zip">
-              Zip Code
-            </label>
-            <input
-              class="form-control ml-0"
-              type="text"
-              name="zip"
-              id="zip"
-              placeholder="Zip Code"
-              required
-            />
-          </div>
-        </div>
-        <div class="row m-auto justify-content-end pt-3">
-          <button type="button" class="btn-lg btn-primary" id="addItemSubmit">
-            Submit
-          </button>
-        </div>
+        </select>
+      </div>
+      <div class="col-sm-3 mt-2">
+        <label for="zip">Zip Code</label>
+        <input type="text" class="form-control" name="zip" id="zip" placeholder="Zip Code">
       </div>
     </div>
   </form>
+
+  <!--attachment-->
+   <div class="row">
+        <div class="col-sm-12">
+            <div class="form-row mt-2 mb-1">
+                <div class="form-group col-sm-6">
+                    <label for="uploadForm">Attachments (maximum 3)</label>
+                    <form id="uploadForm" enctype="multipart/form-data" method="post" name="fileinfo" accept="image/*">
+                        <input id="myFile" type="file" name="aws_multiple_images" multiple />
+                        <p id="msg"></p>
+                    </form>
+                </div>
+                <div class="form-group col-sm-6">
+                </div>
+        
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+          <div class="row justify-content-center mb-5">
+            <button type="button" class="btn-lg btn-primary" id="addItemSubmit">
+            Submit
+            </button>
+          </div>
+          
+        </div>
+        <!-- Loading Modal -->
+        <div class="modal fade" id="LoadingModal1" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <div class="spinner-border text-success" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                    <span id="loadingModalStatus" class="display-5 text-success">Saving new listing...</span>
+              </div>        
+
+            </div>
+          </div>
+        </div>        
+                                          
+        
+      </div>   
+
 </div>
 <script src="/scripts/addNewItem.js"></script>

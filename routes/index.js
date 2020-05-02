@@ -9,6 +9,8 @@ router.use('/', require('./home.js'));
 router.use('/addItem', require('./addItem.js'));
 //backend api calls - apis are stored in api.js file
 router.use('/api', require('./api.js'));
+//aws file storage
+router.use('/aws', require('./aws.js'));
 //display items
 router.use('/searchResults', require('./searchResults'));
 
