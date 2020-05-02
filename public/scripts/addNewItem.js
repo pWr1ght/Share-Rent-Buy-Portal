@@ -13,17 +13,41 @@ document.getElementById('addItemSubmit').addEventListener('click', (event) => {
 		console.log('Error1 Please fill out all fields', data);
 		return { error1: 'No fields should be empty.', data };
 	} else {
+		//modal for saving screen
+		document.getElementById("loadingModalStatus").textContent = "Saving new listing...";
+		$("#LoadingModal1").modal();
+
 		fetch('/api/addNewItem', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(data)
 		})
 			.then((data1) => {
-				var node = document.getElementById('divInForm');
-				let newElement = (document.createElement('h3').innerText = 'New Item Added');
-				node.replaceWith(newElement);
-				window.location.href = '/';
-				return data1;
+				//var node = document.getElementById('divInForm');
+				//let newElement = (document.createElement('h3').innerText = 'New Item Added');
+				//node.replaceWith(newElement);
+
+				return data1.json();
+	
+			}).then((data2) => {
+				console.log(data2);
+				//upload attachment
+				document.getElementById("loadingModalStatus").textContent = "Uploading attachment...";
+				var form = document.forms.namedItem("fileinfo");
+				var formData = new FormData(form);
+				formData.append("listId",data2.insertID);
+				return fetch('/aws/upload', {method: 'POST', body: formData});
+						
+			}).then((data3) => {
+				return data3.json();
+			}).then((data4) => {
+				console.log(data4);
+				document.getElementById("loadingModalStatus").textContent = data4.uploadStatus;
+                //redirect to home page
+                setTimeout(function(){
+                    window.location.href = "./";
+				},2000);
+				return data4; 
 			})
 			.catch((err) => console.log(err));
 	}

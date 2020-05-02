@@ -42,7 +42,8 @@ router.post('/addNewItem', async (req, res, next) => {
 						if (err) {
 							res.send(err);
 						}
-						res.send('Success');
+						//console.log(result.insertId);
+						res.send(JSON.stringify({insertID:result.insertId}));
 					}
 				);
 			} catch (err) {
