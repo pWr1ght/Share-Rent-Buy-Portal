@@ -93,9 +93,9 @@ app.use('/edititem', require('./routes/editItem.js'));
 
 //Displaying Item (By PW)
 //suppose to display the selected item based on id
-app.get('/item/:id', function(req, res) {
-	res.render("displayItem");
-});
+// app.get('/item/:id', function(req, res) {
+// 	res.render("displayItem");
+// });
 // app.get("/item/:id", function(req, res){
 // 	res.render("displayItem")
 // });
