@@ -91,15 +91,6 @@ app.delete('/logout', checkAuthenticated, (req, res) => {
 app.use('/', require('./routes/index.js'));
 app.use('/edititem', require('./routes/editItem.js'));
 
-//Displaying Item (By PW)
-//suppose to display the selected item based on id
-// app.get('/item/:id', function(req, res) {
-// 	res.render("displayItem");
-// });
-// app.get("/item/:id", function(req, res){
-// 	res.render("displayItem")
-// });
-
 //Go here when 404
 app.use(function(req, res) {
 	res.status(404);
@@ -126,27 +117,6 @@ function checkNotAuthenticated(req, res, next) {
 	}
 	next();
 }
-//Displaying Item (By PW) 
-//suppose to display the selected item based on id 
-//I would also like incorporate this this in routes (TODO)
-app.get('/item/:id', function(req, res) {
-	if (req.isAuthenticated()) {
-	console.log([req.params.id])
-	console.log("hello")
-	}
-});
-	// pool.query('SELECT * FROM Items WHERE EmpID = ?', [req.params.id], (err, rows, fields)=> {
-	// if(!err) {
-	// console.log(rows);
-	// res.send(rows);
-	// }
-	// else {
-	// console.log(err)
-	// }
-	// })
-    // res.render("displayItem");
-
-
 
 //Server
 app.listen(app.get('port'), function() {

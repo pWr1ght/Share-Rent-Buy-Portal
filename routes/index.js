@@ -12,17 +12,11 @@ router.use('/api', require('./api.js'));
 //display items
 router.use('/searchResults', require('./searchResults'));
 
-// Displaying Item (By PW)
+// Displaying Item (By PW) (feel free to change format)
 router.use('/item/:id', function (req, res, next) {
     req.id_label = req.params.id;
     next();
 }, require('./displayItem.js'));
 
-
-
-
-// router.get('/item/:id', (req, res)=> {
-//     res.send(req.params.id);
-// });
 
 module.exports = router;

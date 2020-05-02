@@ -3,7 +3,8 @@ module.exports = function () {
     var testItems = require('../modules/testPosts');
     const pool = require('../modules/dbcon').pool;
     var router = express.Router();
-
+    
+    // queries select item
     router.get('/', function(req, res) {
         var idName = req.id_label
         console.log(idName)
