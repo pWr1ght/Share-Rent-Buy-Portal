@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	//remove the search function from the navbar
-	document.getElementById("searchNav").innerHTML = "";
+	//document.getElementById("searchNav").innerHTML = "";
 	document.getElementById("input_search_button").onclick = performSearch;
 
 	//add enter key detection to input_search

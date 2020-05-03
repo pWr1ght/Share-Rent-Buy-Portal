@@ -40,8 +40,8 @@
           <div class="col-sm-6 col-md-3 mb-4">
             <div class="card h-100">
               <img
-                class="card-img-top"
-                src="..."
+                class="card-img-top img-thumbnail"
+                src="{{this.FirstAttLink}}"
                 alt="Replace with Attachement img"
               />
               <div class="card-body">
@@ -49,7 +49,7 @@
                   {{this.Title}}
                 </h5>
                 <p class="card-text">
-                  {{this.Descr}}
+                  Price: &#36;{{this.Price}}
                 </p>
                 <a class="card-text stretched-link" href="/item/{{this.Id}}">
                   <small class="text-muted" id="{{this.Id}}_dist">
@@ -75,4 +75,4 @@
   </section>
 {{/if}}
 
-{{!-- <script src="scripts/home.js"></script> --}}
+<script src="scripts/home.js"></script>
