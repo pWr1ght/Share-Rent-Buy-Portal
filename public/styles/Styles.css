@@ -40,3 +40,8 @@ a:hover {
 .disp-card{
   margin: 2rem;
 }
+
+#map {
+  height: 400px;
+  width: 500px;
+}

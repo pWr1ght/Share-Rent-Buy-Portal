@@ -8,7 +8,8 @@ module.exports = function () {
     router.get('/', function(req, res) {
         var idName = req.id_label
         console.log(idName)
-        var sql = 'SELECT * FROM Items Where itemID = ' + idName
+        //NOTE: u.UserID for Select if just want email
+        var sql = 'SELECT * FROM Items i INNER JOIN Users u on i.userID = u.userID where i.itemID = ' + idName
         pool.query(sql, (err, result) => {
             if(err) throw err;
             console.log(result)
