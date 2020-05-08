@@ -5,6 +5,7 @@ function performSearch(event) {
 	var search = document.getElementById('input_search').value;
 	var lat = document.getElementById('user_lat').value;
 	var long = document.getElementById('user_lon').value;
+
 	if (!search) {
 		return;
 	}
