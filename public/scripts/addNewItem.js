@@ -23,9 +23,6 @@ document.getElementById('addItemSubmit').addEventListener('click', (event) => {
 			body: JSON.stringify(data)
 		})
 			.then((data1) => {
-				//var node = document.getElementById('divInForm');
-				//let newElement = (document.createElement('h3').innerText = 'New Item Added');
-				//node.replaceWith(newElement);
 
 				return data1.json();
 	
@@ -36,6 +33,7 @@ document.getElementById('addItemSubmit').addEventListener('click', (event) => {
 				var form = document.forms.namedItem("fileinfo");
 				var formData = new FormData(form);
 				formData.append("listId",data2.insertID);
+				formData.append("newFileCt",document.getElementById("myFile").files.length);
 				return fetch('/aws/upload', {method: 'POST', body: formData});
 						
 			}).then((data3) => {

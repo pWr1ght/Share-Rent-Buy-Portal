@@ -2,7 +2,7 @@ var methods = {
 
 	getUsersItems: function(id, complete) {
 		const mysql = require('./dbcon');
-		var itemQuery = 'SELECT * FROM unqof373yoc7xedq.Items ' +
+		var itemQuery = 'SELECT * FROM Items ' +
 		'LEFT JOIN Categories c ON c.categoryId = Items.catID '+
 		'LEFT JOIN Users u ON u.userID = Items.userID '+
         'WHERE Items.userID = ?;';
@@ -42,10 +42,11 @@ var methods = {
 
 	getItem: function(id, complete) {
 		const mysql = require('./dbcon');
-		var itemQuery = 'SELECT * FROM unqof373yoc7xedq.Items ' +
-		'LEFT JOIN Categories c ON c.categoryId = Items.catID '+
-		'LEFT JOIN Users u ON u.userID = Items.userID '+
-        'WHERE Items.itemID = ?;';
+		var itemQuery = 'SELECT i.*, u.*, c.*, a.attachmentID, a.attName, a.attDescr FROM Items i ' +
+		'LEFT JOIN Categories c ON c.categoryId = i.catID '+
+		'LEFT JOIN Users u ON u.userID = i.userID '+
+		'LEFT JOIN Attachments a ON a.itemID = i.itemID '+
+        'WHERE i.itemID = ?;';
 		function returnItem(err, rows, fields) {
 			if (err) {
 				console.log(err);
@@ -67,8 +68,18 @@ var methods = {
 					"categoryName": rows[0].categoryName,
 					"author": rows[0].firstName + ' ' + rows[0].lastName,
 					"authorPh": rows[0].userPhone,
-					"authorEmail": rows[0].userEmail
+					"authorEmail": rows[0].userEmail,
+					"attachments" : []
 				};
+
+				for(let row in rows){
+					if(rows[row].attachmentID != null){
+						item.attachments.push({
+							"AttachId":rows[row].attachmentID,
+							"AttName":rows[row].attName,
+							"AttLink":rows[row].attDescr});
+					}
+				}
 				context = item;	
 			complete(context);
 		}
@@ -77,7 +88,7 @@ var methods = {
 
 	saveItem: function(data, complete){
 		const mysql = require('./dbcon');
-		var updates = 'UPDATE `unqof373yoc7xedq`.`Items` ' + 
+		var updates = 'UPDATE Items ' + 
 		'SET `itemName` = ?, ' +
 		'`catID` = ?, '+
 		'`itemDescription` = ?, '+
@@ -102,7 +113,7 @@ var methods = {
 
 	getCategories: function(complete) {
 		const mysql = require('./dbcon');
-		var catQuery = 'SELECT * FROM unqof373yoc7xedq.Categories ';
+		var catQuery = 'SELECT * FROM Categories ';
 		function returnCategories(err, rows, fields) {
 			if (err) {
 				console.log(err);
