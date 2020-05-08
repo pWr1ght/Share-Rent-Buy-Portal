@@ -46,7 +46,7 @@ function saveEdit() {
             fetch('/aws/delete', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({deleteList:gatherDeleteAttachments()})
+                body: JSON.stringify({deleteList:gatherDeleteAttachments("close")})
             })
                 .then((data1) => {
                     return data1.json();           
@@ -152,7 +152,6 @@ function populateEditForm(data) {
         }
     }
 
-    console.log(data);
     for(let n = 0; n < data.attachments.length; n++){
         let tmp = document.createElement("img");
         tmp.className = "img-thumbnail";
@@ -200,20 +199,33 @@ function deleteItem(id) {
 
     var r = confirm("This will permanently remove the item.\nThis change may not be undone!");
     if (r == true) {
-        var req = new XMLHttpRequest();
-        req.open('DELETE', '/editItem', true)
-        req.setRequestHeader('Content-Type', 'application/json');
-        req.addEventListener('load', function () {
-            //Process response
-            if (req.status >= 200 && req.status < 400) {
-                var resp = req.responseText;
-                location.reload();
-            } else {
-                console.log("Error in network request: " + req.statusText);
-            }
-        });
-        payload = { id: id }
-        req.send(JSON.stringify(payload));
+
+        //delete attachment first, then the item from the database
+        fetch('/aws/delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({deleteList:gatherDeleteAttachments("attachdetails_" + id)})
+            })
+			.then((data1) => {
+
+				return data1.json();
+	
+			}).then((data2) => {
+				console.log(data2);
+				//delete listing
+				return fetch('/editItem', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({id:id})});
+						
+			}).then((data3) => {
+				return data3.json();
+			}).then((data4) => {
+				console.log(data4);
+				location.reload();
+				return data4; 
+			})
+			.catch((err) => console.log(err));
     }
 }
 
@@ -230,7 +242,7 @@ function addImageRemoveFunction(){
             //var imgWrap = this.parentElement;
             //imgWrap.parentElement.removeChild(imgWrap);
             let imgWrapList = document.getElementsByClassName("img-wrap");
-            let curDeletelist = gatherDeleteAttachments();
+            let curDeletelist = gatherDeleteAttachments("close");
             if(imgWrapList.length-curDeletelist.files.length > 0){
                 document.getElementById("curAttached").style.display = "block";
             }else{
@@ -257,9 +269,9 @@ function addImageRemoveFunction(){
 }
 
 //This function gathers the attachments to be deleted
-function gatherDeleteAttachments(){
+function gatherDeleteAttachments(imgtagClassName){
     //an object: {deleteCt:,files:[{attachId:,filename:}]}
-    let curImgList = document.getElementsByClassName("close");
+    let curImgList = document.getElementsByClassName(imgtagClassName);
     let result = {files:[]};
     let deleteCt = 0;
     for(let i = 0; i < curImgList.length; i++){

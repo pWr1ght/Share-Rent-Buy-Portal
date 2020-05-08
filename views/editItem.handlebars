@@ -5,11 +5,21 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <img src="/Files/PEO_M4_Carbine_RAS_M68_CCO.jpg" class="card-img-top" alt="...">
+                    {{#if attachments}}
+                    {{#each attachments}}
+                        {{#with this}}
+                            <span class="attachdetails_{{this.ListingId}}" data-filename="{{this.AttName}}" data-id="{{this.AttachId}}" data-deleted="1" hidden></span>
+                            <img src="{{this.AttLink}}" class="img-thumbnail" style="max-width:33%; height: auto" alt="/Files/image-unavailable1.png">
+                        {{/with}}
+                    {{/each}}
+                    {{else}}
+                        <img src="{{this.firstpic}}" class="img-thumbnail" style="max-width:33%; height: auto" alt="/Files/image-unavailable1.png">
+                    {{/if}}
+                    
                     <div class="card-body">
                         <h5 id="name{{id}}" class="card-title">{{itemName}}</h5>
-                        <textarea readonly id="descr{{id}}" class="card-text form-control"
-                            rows="5">{{itemDescription}}</textarea>
+                        <!--<textarea readonly id="descr{{id}}" class="card-text form-control"
+                            rows="5">{{itemDescription}}</textarea>-->
 
                     </div>
                     <ul class="list-group list-group-flush">
