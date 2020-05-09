@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch');
 const pool = require('../modules/dbcon').pool;
+var hbs = require('handlebars');
 router.get('/', (req, res, next) => {
 	var { search, lat, long } = req.query;
 	var results;
@@ -49,7 +50,10 @@ router.get('/', (req, res, next) => {
 							});
 							return;
 						}
-						res.render('displayItems', { searchResult: result2, searchName: item });
+					
+					
+					
+					res.render('displayItems', { searchResult: result2, searchName: item });
 						return;
 					}
 				);
