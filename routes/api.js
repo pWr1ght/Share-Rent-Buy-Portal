@@ -33,8 +33,20 @@ router.post('/addNewItem', async (req, res, next) => {
 		var message = 'User not logged in';
 		res.redirect('/login', message);
 	} else {
-		var { name, description, price, phone, address, city, state, zip, lat, long, category } = req.body;
-		if (!name || !description || !price || !phone || !address || !city || !state || !zip || !category) {
+		var { name, description, price, phone, address, city, state, zip, lat, long, category, sell_type } = req.body;
+		console.log(req.body);
+		if (
+			!name ||
+			!description ||
+			!price ||
+			!phone ||
+			!address ||
+			!city ||
+			!state ||
+			!zip ||
+			!category ||
+			!sell_type
+		) {
 			res.send({ error1: 'No fields should be empty.' });
 			return;
 		} else {
@@ -56,8 +68,22 @@ router.post('/addNewItem', async (req, res, next) => {
 			try {
 				pool.query(
 					'INSERT INTO Items (userID, catID, itemName, itemDescription, itemPrice, itemPhone, itemAddress, itemCity, ' +
-						'itemState, itemZip, itemLat, itemLong) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
-					[ req.user.id, category, name, description, price, phone, address, city, state, zip, lat, long ],
+						'itemState, itemZip, itemLat, itemLong, sellType) VALUES (?,?,?,?,?,?,?,?,?,?,?,?, ?)',
+					[
+						req.user.id,
+						category,
+						name,
+						description,
+						price,
+						phone,
+						address,
+						city,
+						state,
+						zip,
+						lat,
+						long,
+						sell_type
+					],
 					(err, result) => {
 						if (err) {
 							res.send(err);

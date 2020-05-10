@@ -30,7 +30,7 @@ document.getElementById('addItemSubmit').addEventListener('click', (event) => {
 	let state = document.getElementById('state').value;
 	let zip = document.getElementById('zip').value;
 	var data = { name, description, price, sell_type, phone, address, city, state, zip, category };
-	if (!name || !description || !price || !phone || !address || !city || !state || !zip || !category) {
+	if (!name || !description || !price || !phone || !address || !city || !state || !zip || !category || !sell_type) {
 		console.log('Error1 Please fill out all fields', data);
 		return { error1: 'No fields should be empty.', data };
 	} else {
