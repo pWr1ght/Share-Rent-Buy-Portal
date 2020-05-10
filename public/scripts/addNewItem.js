@@ -1,3 +1,24 @@
+showCategories = async () => {
+	let catElem = document.getElementById('categories');
+
+	let allAvailableCats = await fetch('/api/getCategories');
+	let listCategories = await allAvailableCats.json();
+
+	let defaultNode = document.createElement('option');
+	defaultNode.textContent = 'Please Select';
+	catElem.appendChild(defaultNode);
+
+	console.log(listCategories);
+	listCategories.categoryResults.forEach((element) => {
+		let newNode = document.createElement('option');
+		newNode.value = element.categoryName;
+		newNode.innerText = element.categoryName;
+		catElem.appendChild(newNode);
+	});
+};
+
+showCategories();
+
 document.getElementById('addItemSubmit').addEventListener('click', (event) => {
 	let name = document.getElementById('name').value;
 	let description = document.getElementById('description').value;
@@ -14,8 +35,8 @@ document.getElementById('addItemSubmit').addEventListener('click', (event) => {
 		return { error1: 'No fields should be empty.', data };
 	} else {
 		//modal for saving screen
-		document.getElementById("loadingModalStatus").textContent = "Saving new listing...";
-		$("#LoadingModal1").modal();
+		document.getElementById('loadingModalStatus').textContent = 'Saving new listing...';
+		$('#LoadingModal1').modal();
 
 		fetch('/api/addNewItem', {
 			method: 'POST',
@@ -23,29 +44,29 @@ document.getElementById('addItemSubmit').addEventListener('click', (event) => {
 			body: JSON.stringify(data)
 		})
 			.then((data1) => {
-
 				return data1.json();
-	
-			}).then((data2) => {
+			})
+			.then((data2) => {
 				console.log(data2);
 				//upload attachment
-				document.getElementById("loadingModalStatus").textContent = "Uploading attachment...";
-				var form = document.forms.namedItem("fileinfo");
+				document.getElementById('loadingModalStatus').textContent = 'Uploading attachment...';
+				var form = document.forms.namedItem('fileinfo');
 				var formData = new FormData(form);
-				formData.append("listId",data2.insertID);
-				formData.append("newFileCt",document.getElementById("myFile").files.length);
-				return fetch('/aws/upload', {method: 'POST', body: formData});
-						
-			}).then((data3) => {
+				formData.append('listId', data2.insertID);
+				formData.append('newFileCt', document.getElementById('myFile').files.length);
+				return fetch('/aws/upload', { method: 'POST', body: formData });
+			})
+			.then((data3) => {
 				return data3.json();
-			}).then((data4) => {
+			})
+			.then((data4) => {
 				console.log(data4);
-				document.getElementById("loadingModalStatus").textContent = data4.uploadStatus;
-                //redirect to home page
-                setTimeout(function(){
-                    window.location.href = "./";
-				},2000);
-				return data4; 
+				document.getElementById('loadingModalStatus').textContent = data4.uploadStatus;
+				//redirect to home page
+				setTimeout(function() {
+					window.location.href = './';
+				}, 2000);
+				return data4;
 			})
 			.catch((err) => console.log(err));
 	}

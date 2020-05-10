@@ -6,6 +6,26 @@ const fetch = require('node-fetch');
 //add dotenv functionality
 require('dotenv').config();
 
+//get categories
+router.get('/getCategories', (req, res, next) => {
+	try {
+		pool.query('SELECT categoryName FROM Categories', (err, result) => {
+			if (err) {
+				res.send({ err });
+				return;
+			}
+			if (result.length == 0) {
+				res.send({ categoryResults: result, msg: 'No Categories found' });
+				return;
+			}
+			res.send({ categoryResults: result });
+		});
+	} catch (err) {
+		res.status(500).send('categoryItems', { error: err });
+		return;
+	}
+});
+
 //Add new item API
 router.post('/addNewItem', async (req, res, next) => {
 	if (!req.user) {
@@ -43,7 +63,7 @@ router.post('/addNewItem', async (req, res, next) => {
 							res.send(err);
 						}
 						//console.log(result.insertId);
-						res.send(JSON.stringify({insertID:result.insertId}));
+						res.send(JSON.stringify({ insertID: result.insertId }));
 					}
 				);
 			} catch (err) {
