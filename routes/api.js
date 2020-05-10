@@ -9,7 +9,7 @@ require('dotenv').config();
 //get categories
 router.get('/getCategories', (req, res, next) => {
 	try {
-		pool.query('SELECT categoryName FROM Categories', (err, result) => {
+		pool.query('SELECT * FROM Categories', (err, result) => {
 			if (err) {
 				res.send({ err });
 				return;
@@ -33,8 +33,8 @@ router.post('/addNewItem', async (req, res, next) => {
 		var message = 'User not logged in';
 		res.redirect('/login', message);
 	} else {
-		var { name, description, price, phone, address, city, state, zip, lat, long } = req.body;
-		if (!name || !description || !price || !phone || !address || !city || !state || !zip) {
+		var { name, description, price, phone, address, city, state, zip, lat, long, category } = req.body;
+		if (!name || !description || !price || !phone || !address || !city || !state || !zip || !category) {
 			res.send({ error1: 'No fields should be empty.' });
 			return;
 		} else {
@@ -57,7 +57,7 @@ router.post('/addNewItem', async (req, res, next) => {
 				pool.query(
 					'INSERT INTO Items (userID, catID, itemName, itemDescription, itemPrice, itemPhone, itemAddress, itemCity, ' +
 						'itemState, itemZip, itemLat, itemLong) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
-					[ req.user.id, 2, name, description, price, phone, address, city, state, zip, lat, long ],
+					[ req.user.id, category, name, description, price, phone, address, city, state, zip, lat, long ],
 					(err, result) => {
 						if (err) {
 							res.send(err);

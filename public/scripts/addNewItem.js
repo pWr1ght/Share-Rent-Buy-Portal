@@ -8,10 +8,9 @@ showCategories = async () => {
 	defaultNode.textContent = 'Please Select';
 	catElem.appendChild(defaultNode);
 
-	console.log(listCategories);
 	listCategories.categoryResults.forEach((element) => {
 		let newNode = document.createElement('option');
-		newNode.value = element.categoryName;
+		newNode.value = element.categoryId;
 		newNode.innerText = element.categoryName;
 		catElem.appendChild(newNode);
 	});
@@ -24,13 +23,14 @@ document.getElementById('addItemSubmit').addEventListener('click', (event) => {
 	let description = document.getElementById('description').value;
 	let price = document.getElementById('price').value;
 	let sell_type = document.getElementById('select_buy_choice').value;
+	let category = document.getElementById('categories').value;
 	let phone = document.getElementById('phone').value;
 	let address = document.getElementById('address').value;
 	let city = document.getElementById('city').value;
 	let state = document.getElementById('state').value;
 	let zip = document.getElementById('zip').value;
-	var data = { name, description, price, sell_type, phone, address, city, state, zip };
-	if (!name || !description || !price || !phone || !address || !city || !state || !zip) {
+	var data = { name, description, price, sell_type, phone, address, city, state, zip, category };
+	if (!name || !description || !price || !phone || !address || !city || !state || !zip || !category) {
 		console.log('Error1 Please fill out all fields', data);
 		return { error1: 'No fields should be empty.', data };
 	} else {
