@@ -16,8 +16,9 @@ module.exports = function () {
             failureFlash: true
         })
     }
-
+    
     router.get('/', renderLogin);
     router.post('/', loginUser );
+    
     return router;
 }();

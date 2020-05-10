@@ -27,8 +27,18 @@ module.exports = function () {
         
     }
 
+    function getuser(req, res){
+        var context = {};
+        context.auth = "none";
+        if (req.isAuthenticated()) {
+            context.auth = req.user;
+        }  
+        res.send(context);
+    }
+
     /* The routes for homepage */
-    router.get('/', serveHome); 
+    router.get('/', serveHome);
+    router.get('/usr', getuser); 
     return router;
 }();
 

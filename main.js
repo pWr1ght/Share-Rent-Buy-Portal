@@ -73,7 +73,7 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 	res.render('register');
 });
 
-app.use('/locate', require('./routes/locate.js'));
+app.use('/locate', require('./routes/locate.js')); // This can be deleted
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
 	function complete(input) {
