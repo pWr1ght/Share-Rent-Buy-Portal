@@ -8,6 +8,9 @@ module.exports = function () {
 	function renderItems(req, res) {
 
         function setItems(data){
+            if (req.isAuthenticated()) {
+                data.auth = req.user;
+            } 
             res.render('editItem', {data});
         }
 		get_set_items.data.getUsersItems(req.user.id, setItems) ;
