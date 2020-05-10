@@ -101,7 +101,9 @@ module.exports = function () {
                 saveItem.lat = lat;
                 saveItem.long = long;
                 get_set_items.data.saveItem(saveItem, () => {
-                    res.send("Item Saved");
+
+                    res.send("Item saved!");
+                    
                 });
             } catch (err) {
                 res.status(500).send({ error: err });
@@ -109,11 +111,18 @@ module.exports = function () {
         }
     }
 
-    router.delete('/', removeItem);
-    router.post('/id', editEditItem);
-    router.post('/save', saveItem);
+    function checkAuthenticated(req, res, next){
+        if(req.isAuthenticated()){
+            return next();
+        }    
+        res.redirect('/login');
+    }
+
+    router.delete('/', checkAuthenticated, removeItem);
+    router.post('/id', checkAuthenticated, editEditItem);
+    router.post('/save', checkAuthenticated, saveItem);
     router.get('/cats', getCats);
-    router.get('/', renderItems);
+    router.get('/', checkAuthenticated, renderItems);
     
 	return router; //Branch test II
 }();

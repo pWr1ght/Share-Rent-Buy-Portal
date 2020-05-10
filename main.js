@@ -23,6 +23,7 @@ app.use('/static', express.static('public')); //Allow use of static files
 app.set('view engine', 'handlebars'); //Use Handlebars templates
 app.set('port', process.env.PORT || 3344); //Accept port from the commandline
 app.set('mysql', mysql); //Use MySql DB engine
+const pool = require('./modules/dbcon.js').pool;
 app.use(express.static(path.join(__dirname, '/public'))); //Specify static files routes
 app.use(express.static(path.join(__dirname, '/uploads')));
 app.use(flash());

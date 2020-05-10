@@ -65,10 +65,13 @@
             </form>
             {{/if}}
             
+            {{#if this.home}}
+            {{else}}
             <form class="form-inline my-2 my-lg-0" id="searchNav">
                 <input class="form-control mr-sm-2" type="search" id="input_search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="input_search_button">Search</button>
             </form>
+            {{/if}}
             <a id="currLoc" class="nav-link" href="#"></a>
         </div>
     </nav>
@@ -83,8 +86,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-    <script src="scripts/scripts.js"></script>
-    <script src="scripts/search.js"></script>
+    <script src="/scripts/scripts.js"></script>
+    <script src="/scripts/search.js"></script>
     
 
     
