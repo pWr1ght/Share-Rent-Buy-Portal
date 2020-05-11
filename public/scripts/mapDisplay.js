@@ -1,6 +1,8 @@
+
 function initMap() {
 
   var center = {lat: 34.052235, lng: -118.243683};
+  
   var locations = [
     ['Philz Coffee}}}<br>\
     801 S Hope St A, Los Angeles, CA 90017<br>\
