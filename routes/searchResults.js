@@ -52,7 +52,7 @@ router.get('/', (req, res, next) => {
 						}
 					
 					
-					
+					console.log(result);
 					res.render('displayItems', { searchResult: result2, searchName: item });
 						return;
 					}

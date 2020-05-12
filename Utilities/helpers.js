@@ -6,9 +6,9 @@ let capitalize = function(cap) {
 	return cap.charAt(0).toUpperCase() + cap.slice(1);
 };
 
-// let json = function(obj) {
-// 	console.log(obj, "this is")
-// 	return JSON.stringify(obj);
-// }
+let json = function(obj) {
+	// console.log(JSON.stringify(obj), "this is")
+	return JSON.stringify(obj);
+}
 
-module.exports = {distanceFixed, capitalize };
+module.exports = {distanceFixed, capitalize, json };

@@ -45,14 +45,40 @@
       {{/each}}
     </div>
   {{/if}}
-  {{#if searchResult}}
-    <div id="map"></div>
+   {{#if searchResult}}
+     <div id="mapid"></div>
   {{/if}}
+</div>  
 </div>
 
-</div>
 
-<script src="/scripts/mapDisplay.js"></script>
+<script>
+  
+    var moon = "{{{searchResult}}}"
+    var data = "{{json searchResult}}"
+    data = data.replace(/(&quot\;)/g,"\"")
+    console.log(data)
+    let dataArray = JSON.parse(data);
+    console.log(dataArray)
+    var map = L.map('mapid').setView([dataArray[0].itemLat, dataArray[0].itemLong], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+  dataArray.forEach(function(entry){
+  var name = entry.itemName
+  var address = entry.itemAddress + "\n" + entry.itemCity + "," + entry.itemState
+  L.marker([entry.itemLat, entry.itemLong]).addTo(map) 
+  .bindPopup(entry.itemName + '<br>' + address)
+  .openPopup();
+});
+
+
+  
+</script>
+{{!-- "{{json searchResult}}" --}}
+{{!-- <script src="/scripts/mapDisplay.js"></script> --}}
 
 <script src="https://twitter.github.io/typeahead.js/js/handlebars.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbpFSCCO6QuYnyX0FiOkAqE110PV6k1d4&callback=initMap" async defer></script>
+{{!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbpFSCCO6QuYnyX0FiOkAqE110PV6k1d4&callback=initMap" async defer></script> --}}
+ 
