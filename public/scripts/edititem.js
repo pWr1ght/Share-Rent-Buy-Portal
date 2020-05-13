@@ -29,20 +29,16 @@ function saveEdit() {
     }).then((data2) => {
         //upload attachment
         loadingModal.textContent = "Updating attachment...";
-        var form = document.forms.namedItem("fileinfo");
-        var formData = new FormData(form);
-        formData.append("listId",payload.itemID);
-        formData.append("newFileCt",document.getElementById("myFile").files.length);
-        return fetch('/aws/upload', {method: 'POST', body: formData});				
+        return fetch('/aws/upload', {method: 'POST', body: getMultiformData(payload.itemID)});				
     }).then((data3) => {
         return data3.json();
     }).then((data4) => {
         loadingModal.textContent = data4.uploadStatus;
-        reloadPage(2000);                   
+        reloadPage(1000);                   
         return data4; 
     }).catch((err) => {
         loadingModal.textContent = err;
-        reloadPage(2000);
+        reloadPage(1000);
     });  
 }
 
@@ -61,12 +57,19 @@ function getFormFields(){
     }
 }
 
+function getMultiformData(listingId){
+	let form = document.forms.namedItem('fileinfo');
+	let formData = new FormData(form);
+	formData.append('listId', listingId);
+	formData.append('newFileCt', document.getElementById('myFile').files.length);
+	return formData;
+}
+
 function reloadPage(timeout){
     setTimeout(function(){
         location.reload();
     },timeout);
 }
-
 
 function cancelEdit() {
     document.getElementById("edits").hidden = true;
