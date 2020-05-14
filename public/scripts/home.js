@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	//remove the search function from the navbar
-	//document.getElementById("searchNav").innerHTML = "";
 	document.getElementById("input_search_button").onclick = performSearch;
 
 	//add enter key detection to input_search
@@ -16,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	})
 });
 
+/*
 function getDistances() {
 	var ids = document.getElementsByName('elemId').length;
 	console.log('ids: ' + ids);
@@ -51,7 +51,7 @@ function getDist(id) {
 	});
 	req.send(JSON.stringify(payload));
 }
-
+*/
 function getDistances2(){
 	let userCoord = {lat: document.getElementById('user_lat').value, long: document.getElementById('user_lon').value};
 	let items = document.getElementsByClassName("LatLong");

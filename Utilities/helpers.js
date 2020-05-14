@@ -1,4 +1,4 @@
-var distanceFixed = function(distance) {
+let distanceFixed = function(distance) {
 	return distance.toFixed(2);
 };
 
@@ -12,3 +12,16 @@ let json = function(obj) {
 }
 
 module.exports = {distanceFixed, capitalize, json };
+let sellBadges = function(sellType) {
+	if (sellType == 'Buy') {
+		return `<span class="badge badge-pill badge-success"><strong>${sellType}</strong> </span>`;
+	} else if (sellType == 'Rent') {
+		return `<span class="badge badge-pill badge-danger"><strong>${sellType}</strong> </span>`;
+	} else if (sellType == 'Share') {
+		return `<span class="badge badge-pill badge-primary"><strong>${sellType}</strong> </span>`;
+	} else {
+		return `<span class="badge badge-pill badge-secondary"><strong>${sellType}</strong> </span>`;
+	}
+};
+
+module.exports = { distanceFixed, capitalize, sellBadges };

@@ -6,6 +6,26 @@ const fetch = require('node-fetch');
 //add dotenv functionality
 require('dotenv').config();
 
+//get categories
+router.get('/getCategories', (req, res, next) => {
+	try {
+		pool.query('SELECT * FROM Categories', (err, result) => {
+			if (err) {
+				res.send({ err });
+				return;
+			}
+			if (result.length == 0) {
+				res.send({ categoryResults: result, msg: 'No Categories found' });
+				return;
+			}
+			res.send({ categoryResults: result });
+		});
+	} catch (err) {
+		res.status(500).send('categoryItems', { error: err });
+		return;
+	}
+});
+
 //Add new item API
 router.post('/addNewItem', async (req, res, next) => {
 	if (!req.user) {
@@ -13,8 +33,20 @@ router.post('/addNewItem', async (req, res, next) => {
 		var message = 'User not logged in';
 		res.redirect('/login', message);
 	} else {
-		var { name, description, price, phone, address, city, state, zip, lat, long } = req.body;
-		if (!name || !description || !price || !phone || !address || !city || !state || !zip) {
+		var { name, description, price, phone, address, city, state, zip, lat, long, category, sell_type } = req.body;
+		console.log(req.body);
+		if (
+			!name ||
+			!description ||
+			!price ||
+			!phone ||
+			!address ||
+			!city ||
+			!state ||
+			!zip ||
+			!category ||
+			!sell_type
+		) {
 			res.send({ error1: 'No fields should be empty.' });
 			return;
 		} else {
@@ -36,14 +68,28 @@ router.post('/addNewItem', async (req, res, next) => {
 			try {
 				pool.query(
 					'INSERT INTO Items (userID, catID, itemName, itemDescription, itemPrice, itemPhone, itemAddress, itemCity, ' +
-						'itemState, itemZip, itemLat, itemLong) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
-					[ req.user.id, 2, name, description, price, phone, address, city, state, zip, lat, long ],
+						'itemState, itemZip, itemLat, itemLong, sellType) VALUES (?,?,?,?,?,?,?,?,?,?,?,?, ?)',
+					[
+						req.user.id,
+						category,
+						name,
+						description,
+						price,
+						phone,
+						address,
+						city,
+						state,
+						zip,
+						lat,
+						long,
+						sell_type
+					],
 					(err, result) => {
 						if (err) {
 							res.send(err);
 						}
 						//console.log(result.insertId);
-						res.send(JSON.stringify({insertID:result.insertId}));
+						res.send(JSON.stringify({ insertID: result.insertId }));
 					}
 				);
 			} catch (err) {
