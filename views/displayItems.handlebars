@@ -48,37 +48,82 @@
    {{#if searchResult}}
      <div id="mapid"></div>
   {{/if}}
-</div>  
+</div>
+</br>  
 </div>
 
 
 <script>
+function showLocation(position) {
+  var myLatitude = position.coords.latitude;
+  var mylongitude = position.coords.longitude;
   
-    var moon = "{{{searchResult}}}"
-    var data = "{{json searchResult}}"
-    data = data.replace(/(&quot\;)/g,"\"")
-    console.log(data)
-    let dataArray = JSON.parse(data);
-    console.log(dataArray)
-    var map = L.map('mapid').setView([dataArray[0].itemLat, dataArray[0].itemLong], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+  {{!-- getting the data json data and cleaning escaped data --}}
+  var data = "{{json searchResult}}"
+  data = data.replace(/(&quot\;)/g,"\"")
+  let dataArray = JSON.parse(data);
+  console.log(dataArray)
 
+  {{!-- set up Map --}}
+  var map = L.map('mapid').setView([myLatitude, mylongitude], 7.5);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+  {{!-- L.marker([myLatitude, mylongitude]).addTo(map) 
+    .bindPopup("you are here" + '<br>')
+    .openPopup(); --}}
+  
+
+
+  var redMarker = L.AwesomeMarkers.icon({
+    icon: 'coffee',
+    markerColor: 'red'
+  });
+      
+  L.marker([myLatitude, mylongitude], {icon: redMarker}).addTo(map)
+    .bindPopup("Your Location" + '<br>')
+    .openPopup();
+
+  var colors = ['red', 'blue', 'green', 'purple', 'orange', 'darkred', 'lightred', 'beige', 'darkblue', 'cadetblue', 'darkpurple', 'white', 'pink', 'lightblue', 'lightgreen', 'gray', 'black', 'lightgray'];
+  
+  console.log(redMarker)
   dataArray.forEach(function(entry){
-  var name = entry.itemName
-  var address = entry.itemAddress + "\n" + entry.itemCity + "," + entry.itemState
-  L.marker([entry.itemLat, entry.itemLong]).addTo(map) 
-  .bindPopup(entry.itemName + '<br>' + address)
-  .openPopup();
-});
+    var name = entry.itemName
+    var address = entry.itemAddress + "\n" + entry.itemCity + "," + entry.itemState
+    var randomItem = colors[Math.floor(Math.random()*colors.length)];
+    console.log(randomItem);
+    var colorMarker = L.AwesomeMarkers.icon({
+    markerColor: randomItem
+    });
+
+    L.marker([entry.itemLat, entry.itemLong], {icon: colorMarker} ).addTo(map) 
+      .bindPopup(entry.itemName + '<br>' + address)
+      .openPopup();
+    });
+}
+
+
+function errorHandler(err) {
+  if(err.code == 1) {
+      alert("Error: Access is denied!");
+  } else if( err.code == 2) {
+      alert("Error: Position is unavailable!");
+  }
+}
+
+if(navigator.geolocation) {       
+    // timeout at 60000 milliseconds (60 seconds)
+    var options = {timeout:60000};
+    navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
+}
+
+
+
+
 
 
   
 </script>
-{{!-- "{{json searchResult}}" --}}
-{{!-- <script src="/scripts/mapDisplay.js"></script> --}}
-
 <script src="https://twitter.github.io/typeahead.js/js/handlebars.js"></script>
-{{!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbpFSCCO6QuYnyX0FiOkAqE110PV6k1d4&callback=initMap" async defer></script> --}}
  
