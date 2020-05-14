@@ -11,7 +11,6 @@ let json = function(obj) {
 	return JSON.stringify(obj);
 }
 
-module.exports = {distanceFixed, capitalize, json };
 let sellBadges = function(sellType) {
 	if (sellType == 'Buy') {
 		return `<span class="badge badge-pill badge-success"><strong>${sellType}</strong> </span>`;
