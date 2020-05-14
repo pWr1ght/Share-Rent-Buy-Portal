@@ -24,4 +24,4 @@ let sellBadges = function(sellType) {
 	}
 };
 
-module.exports = { distanceFixed, capitalize, sellBadges };
+module.exports = { distanceFixed, capitalize, sellBadges, json};
