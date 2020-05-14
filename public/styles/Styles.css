@@ -45,7 +45,6 @@ a:hover {
   height: 400px;
   width: 500px;
 }
-
 .img-wrap {
   position: relative;
   display: inline-block;
@@ -68,6 +67,7 @@ a:hover {
   line-height: 10px;
   border-radius: 50%;
 }
+
 .img-wrap:hover .close {
   opacity: 1;
 }
