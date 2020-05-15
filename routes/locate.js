@@ -3,11 +3,6 @@ module.exports = function () {
     const fetch = require("node-fetch");
     var router = express.Router();
 
-	/* This function extracts the current non-expired listings and renders the home page with the data.*/
-	function serveLocate(req, res, next) {
-		var context = {};
-		res.render('locate', context);
-	}
 
 	//Gets the distance and time from user to the listed item
 	function getCoord(req, res, next) {
@@ -68,7 +63,6 @@ module.exports = function () {
 	}
 
 	/* The routes for homepage */
-	router.get('/', serveLocate);
 	router.post('/', getCoord);
 	router.post('/get-near-places', getNearbyPl);
 	return router; //Branch test II

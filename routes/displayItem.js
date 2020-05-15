@@ -1,6 +1,5 @@
 module.exports = function () {
     var express = require('express');
-    var testItems = require('../modules/testPosts');
     const pool = require('../modules/dbcon').pool;
     var router = express.Router();
     

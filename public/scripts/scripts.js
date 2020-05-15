@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     getBrowserLocation(function (){
         getNearby();
-    });   
+    });
+    isLoggedIn();   
 });
 
   //Get current user's browser location
@@ -53,4 +54,35 @@ function getNearby(){
         }
     });
     req.send(JSON.stringify(payload));
+}
+
+function setNavbar(resp){
+    if(resp.auth != "none"){
+        //alert("Hello" + resp.auth.name);
+        document.getElementById("greet").innerText = "Hi " + resp.auth.name;
+        document.getElementById("usrInfo").hidden = false;
+        document.getElementById("register").hidden = true;
+        document.getElementById("usrLogin").hidden = true;
+    } else {
+        document.getElementById("usrInfo").hidden = true;
+        document.getElementById("register").hidden = false;
+        document.getElementById("usrLogin").hidden = false;
+    }
+}
+
+function isLoggedIn() {
+    var req = new XMLHttpRequest();
+    req.open('GET', '/usr', true);
+    req.addEventListener('load', function () {
+        //Process response
+        if (req.status >= 200 && req.status < 400) {
+            var resp = JSON.parse(req.responseText);
+            // Add a dropdown option for every category found in the data base
+            setNavbar(resp);
+
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send(null);
 }

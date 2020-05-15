@@ -1,8 +1,0 @@
-[{"userID":4, "dateJoined":"2020-04-22", "firstName":"Joe", "lastName":"Dirt", "userPassword":"$2b$10$tSTBIEb9JRyR1w7zBnFB3ueS2eCMkIchP.Ob5IFDB8/kOUnfUQ7Bu", "userEmail":"joe@dirt.com", "userPhone":"6549874562"},
- {"userID":8, "dateJoined":"2020-04-22", "firstName":"Donnie", "lastName":"Brasco", "userPassword":"$2b$10$TPDpfIK7uulYpkb1JwHjdOH6wwkP5EEctG/XGLu4ThslEPdbE9phC", "userEmail":"donnie@mob.us", "userPhone":"1234356543"},
- {"userID":9, "dateJoined":"2020-04-22", "firstName":"Tony", "lastName":"Montana", "userPassword":"$2b$10$Wl1W9geUTyzsxo6NP2y3Aeez.dyOaF10b.e8dvO10Pm0kvP8eFH3O", "userEmail":"scarface@fl.com", "userPhone":"9876541234"},
- {"userID":10, "dateJoined":"2020-04-22", "firstName":"Donald", "lastName":"Duck", "userPassword":"$2b$10$Tz0PW4pnMG..XLKI0AJj2ugZwg7MN5VH161b8hafHMK23dIOREgYy", "userEmail":"duff@tail.com", "userPhone":"9119119111"},
- {"userID":11, "dateJoined":"2020-04-22", "firstName":"John", "lastName":"Wayne", "userPassword":"$2b$10$hT7c2wpOBWWbyMSjqRanYeBuVrGTYexxtC6W1LRjUohm99vayYjIy", "userEmail":"bad@dude.com", "userPhone":"6546789543"},
- {"userID":12, "dateJoined":"2020-04-22", "firstName":"Papa", "lastName":"Smerf", "userPassword":"$2b$10$zaDI6lN8VDhOxTitIVWqr.OnfVinM8kwdx.Ndkduc6QORYyfzI6jK", "userEmail":"papa@smerf.net", "userPhone":"9877565612"},
- {"userID":13, "dateJoined":"2020-04-22", "firstName":"Chesty", "lastName":"Puller", "userPassword":"$2b$10$MWxgSlbsWOshV.M7VX1ti.CHg0qx84WWMotDqj1kWRcs5vmE4eBN6", "userEmail":"jarhead@usmc.mil", "userPhone":"75299845621"},
- {"userID":14, "dateJoined":"2020-04-24", "firstName":"Samuel", "lastName":"Chen", "userPassword":"$2b$10$HoDmT3lPxtm.PRg/6yPvRunOfZPijqQZCNpxJvOLSgLe9j1nmZODG", "userEmail":"thesamchen@gmail.com", "userPhone":"9099928317"}]
