@@ -12,43 +12,32 @@ module.exports = function () {
         }
 		get_set_items.data.getUsersItems(req.user.id, setItems) ;
     }
-    
-    // Deletes a item by supplied id
-    function removeItem(req, res){
-        console.log("delete req " + req.body.id);
-        const pool = require('../modules/dbcon').pool;
-        const exists = 'SELECT * FROM Items WHERE itemID=? ';
-        var value = [req.body.id];
-        
-        function deleteItem(err, rows, fields) {
-			if (err) {
-				console.log(err);
-				return;
-			} else if(rows.length == 1) {
-                console.log(rows);
-                // Delete it
-                const deleteQuery = 'DELETE FROM Items WHERE itemID = ? ';
-                pool.query(deleteQuery, value, (err, rows) => {
-                    if(err){
-                        console.log(err);
-                        return;
-                    } else {
-                        function refreshItems(data){
-                            res.send({data});
-                        }
-                        // Return refreshed items array
-                        get_set_items.data.getUsersItems(req.user.id, refreshItems) ;
-                    }
-                })
-            } else {
-                return;
-            }
-            
-        }
-        // Ensure item exists before we delete it.
-        pool.query(exists, value, deleteItem);
-    }
 
+    // Deletes an item by the id and sends the refresh itemlist
+    function removeItemAndSendUpdatedList(req, res){
+
+        const pool = require('../modules/dbcon').pool;
+
+        //Check if the item exists in the database
+        pool.query('SELECT * FROM Items WHERE itemID=? ', [req.body.id], function(err, rows, fields){
+            if(err){
+                res.send({"err":err});
+            }
+            if(rows.length == 1){
+                //Remove the item from the database
+                pool.query('DELETE FROM Items WHERE itemID = ? ', [req.body.id], function(err, rows){
+                    if(err){
+                        res.send({"err":err});
+                    }
+                    //return the refresh itemlist back to caller
+                    get_set_items.data.getUsersItems(req.user.id, (data)=>{res.send({data})});
+                });
+            }else{
+                res.send({"err":"No item found!"});
+            }            
+        });      
+    }
+ 
     function editEditItem(req, res){
 
         function sendItem(item){
@@ -115,7 +104,7 @@ module.exports = function () {
         res.redirect('/login');
     }
 
-    router.delete('/', checkAuthenticated, removeItem);
+    router.delete('/', checkAuthenticated, removeItemAndSendUpdatedList);
     router.post('/id', checkAuthenticated, editEditItem);
     router.post('/save', checkAuthenticated, saveItem);
     router.get('/cats', getCats);

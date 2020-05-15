@@ -4,12 +4,13 @@
 
       <div class="col-lg-3">
          <!-- area where it indicates buy or rentable, its on a fixed position -->
-        <h1 class="my-4">Buyer</h1>
+        <h1 class="my-4"></h1>
         <div class="list-group">
           </br>
-          <a href="#" class="btn btn-success">Buy</a>
+          {{!-- <a href="#" class="btn btn-success">Buy</a> --}}
           </br>
-          <a href="#" class="btn btn-info">Contact Poster</a>
+          {{!-- the posters email --}}
+          <a href="mailto:{{this.userEmail}}" target="_newtab" class="btn btn-info">Contact Poster</a>
           
         </div>
       </div>
@@ -17,9 +18,11 @@
 
       <div class="col-lg-9">
 
-        <div class="card mt-4 ">
-          <div style="width:100; text-align:center">
-            <img src="/Files/electric-bike.jpg">
+        <div class="card mt-4 h-100 ">
+          <div class= "img-fluid" style="text-align:center">
+            
+            {{!-- <img src="/Files/electric-bike.jpg"> --}}
+            <img style="width:100; height: 300px; margin-top: 10px" src={{this.attDescr}}>
           </div>
           {{!-- <img src="Files/electric-bike.jpg"class="card-img-top img-fluid"  alt=""> --}}
           <div class="card-body">
@@ -31,7 +34,7 @@
         </div>
         <!-- /.card -->
 
-        <div class="card card-outline-secondary my-4">
+        {{!-- <div class="card card-outline-secondary my-4">
           <div class="card-header">
             Provided Poster Info
           </div>
@@ -58,7 +61,7 @@
 
     </div>
 
-  </div>
+  </div> --}}
 {{!-- 
  <div class="container">
   <div class="row">
@@ -102,4 +105,4 @@
           </div>
       </div> --}}
     </div>
-</div> --}}
+</div> 
