@@ -3,6 +3,7 @@ let distanceFixed = function(distance) {
 };
 
 let capitalize = function(cap) {
+	console.log(cap);
 	return cap.charAt(0).toUpperCase() + cap.slice(1);
 };
 
