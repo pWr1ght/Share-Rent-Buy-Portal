@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const fetch = require('node-fetch');
 const pool = require('../modules/dbcon').pool;
 var hbs = require('handlebars');
 router.get('/', (req, res, next) => {
@@ -27,7 +26,7 @@ router.get('/', (req, res, next) => {
 				var itemInfo = result[0];
 				pool.query(
 					'SELECT *, ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat)) * .000621371192 as distanceFromSearch,ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat)) * .000621371192 as distanceItemToItem FROM Items WHERE ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat))* .000621371192 < 10 AND itemName COLLATE UTF8_GENERAL_CI LIKE ? ORDER BY distanceFromSearch ASC',
-					[	
+					[
 						long,
 						lat,
 						itemInfo.itemLong,
@@ -50,10 +49,8 @@ router.get('/', (req, res, next) => {
 							});
 							return;
 						}
-					
-					
-					console.log(result);
-					res.render('displayItems', { searchResult: result2, searchName: item });
+
+						res.render('displayItems', { searchResult: result2, searchName: item, searchResult2: result2 });
 						return;
 					}
 				);

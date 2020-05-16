@@ -9,7 +9,7 @@ let capitalize = function(cap) {
 let json = function(obj) {
 	// console.log(JSON.stringify(obj), "this is")
 	return JSON.stringify(obj);
-}
+};
 
 let sellBadges = function(sellType) {
 	if (sellType == 'Buy') {
@@ -23,4 +23,4 @@ let sellBadges = function(sellType) {
 	}
 };
 
-module.exports = { distanceFixed, capitalize, sellBadges, json};
+module.exports = { distanceFixed, capitalize, sellBadges, json };
