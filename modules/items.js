@@ -34,6 +34,8 @@ var methods = {
 						"author": rows[row].firstName + ' ' + rows[row].lastName,
 						"authorPh": rows[row].userPhone,
 						"authorEmail": rows[row].userEmail,
+						"sellType": (rows[row].sellType == null)?-1:rows[row].sellType,
+						"itemPhone": rows[row].itemPhone,
 						"attachments" : [],
 						"firstpic":"/Files/image-unavailable1.png"
 					};
@@ -90,6 +92,8 @@ var methods = {
 					"author": rows[0].firstName + ' ' + rows[0].lastName,
 					"authorPh": rows[0].userPhone,
 					"authorEmail": rows[0].userEmail,
+					"sellType": (rows[0].sellType == null)?-1:rows[0].sellType,
+					"itemPhone": rows[0].itemPhone,
 					"attachments" : []
 				};
 
@@ -119,9 +123,11 @@ var methods = {
 		'`itemState` = ?, '+
 		'`itemZip` = ?, '+
 		'`itemLat` = ?, '+
-		'`itemLong` = ? '+
+		'`itemLong` = ?, '+
+		'`itemPhone` = ?, '+
+		'`sellType` = ? '+
 		' WHERE `itemID` = ?; ';
-		var values = [ data.itemName, data.catID, data.itemDescription, data.itemPrice, data.itemAddress, data.itemCity, data.itemState, data.itemZip, data.lat, data.long, data.itemID ];
+		var values = [ data.itemName, data.catID, data.itemDescription, data.itemPrice, data.itemAddress, data.itemCity, data.itemState, data.itemZip, data.lat, data.long, data.itemPhone, data.sellType, data.itemID ];
 		function saveUpdates(err, rows){
 			if (err) {
 				console.log(err);

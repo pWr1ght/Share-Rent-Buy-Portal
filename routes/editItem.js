@@ -68,7 +68,9 @@ module.exports = function () {
                 itemAddress: req.body.itemAddress,
                 itemCity: req.body.itemCity,
                 itemState: req.body.itemState,
-                itemZip: req.body.itemZip
+                itemZip: req.body.itemZip,
+                itemPhone: req.body.itemPhone,
+                sellType: req.body.sellType
             }
 
             var addressString = req.body.itemAddress + ', ' + req.body.itemCity + ', ' + req.body.itemState;

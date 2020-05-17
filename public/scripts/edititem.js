@@ -5,41 +5,43 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function saveEdit() {
-    //modal for saving screen
-    let loadingModal = document.getElementById("loadingModalStatus");
-    loadingModal.textContent = "Saving new listing...";
-    $("#LoadingModal1").modal();
+    if(allValid()){
+        //modal for saving screen
+        let loadingModal = document.getElementById("loadingModalStatus");
+        loadingModal.textContent = "Saving new listing...";
+        $("#LoadingModal1").modal();
 
-    let payload = getFormFields();
+        let payload = getFormFields();
 
-    fetch('editItem/save',{
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-    }).then((response)=>{
-        if(!response.ok){throw Error(response.status);}
-        //delete attachments
-        return fetch('/aws/delete', {
+        fetch('editItem/save',{
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({deleteList:gatherDeleteAttachments("close")})});           
-    }).then((response1) => {
-        if(!response1.ok){throw Error(response1.status);}
-        return response1.json();          
-    }).then((data2) => {
-        //upload attachment
-        loadingModal.textContent = "Updating attachment...";
-        return fetch('/aws/upload', {method: 'POST', body: getMultiformData(payload.itemID)});				
-    }).then((data3) => {
-        return data3.json();
-    }).then((data4) => {
-        loadingModal.textContent = data4.uploadStatus;
-        reloadPage(1000);                   
-        return data4; 
-    }).catch((err) => {
-        loadingModal.textContent = err;
-        reloadPage(1000);
-    });  
+            body: JSON.stringify(payload)
+        }).then((response)=>{
+            if(!response.ok){throw Error(response.status);}
+            //delete attachments
+            return fetch('/aws/delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({deleteList:gatherDeleteAttachments("close")})});           
+        }).then((response1) => {
+            if(!response1.ok){throw Error(response1.status);}
+            return response1.json();          
+        }).then((data2) => {
+            //upload attachment
+            loadingModal.textContent = "Updating attachment...";
+            return fetch('/aws/upload', {method: 'POST', body: getMultiformData(payload.itemID)});				
+        }).then((data3) => {
+            return data3.json();
+        }).then((data4) => {
+            loadingModal.textContent = data4.uploadStatus;
+            reloadPage(1000);                   
+            return data4; 
+        }).catch((err) => {
+            loadingModal.textContent = err;
+            reloadPage(1000);
+        }); 
+    } 
 }
 
 
@@ -54,6 +56,8 @@ function getFormFields(){
         itemCity: document.getElementById("inputCity").value,
         itemState: document.getElementById("inputState").value,
         itemZip: document.getElementById("inputZip").value,
+        sellType: document.getElementById("select_buy_choice").value,
+        itemPhone: document.getElementById("phone").value
     }
 }
 
@@ -81,6 +85,8 @@ function cancelEdit() {
     document.getElementById("inputAddress").value = "";
     document.getElementById("inputCity").value = "";
     document.getElementById("inputState").value = "";
+    document.getElementById("select_buy_choice").value = "";
+    document.getElementById("phone").value = "";
     document.getElementById("inputZip").value = "";
     document.getElementById("curAttached").style.display = "none"
     document.getElementById("addAttachLnk").disabled = false;
@@ -98,6 +104,10 @@ function populateCategoriesAndSelect(data) {
         if (req.status >= 200 && req.status < 400) {
             var resp = JSON.parse(req.responseText);
             // Add a dropdown option for every category found in the data base
+            var option = document.createElement("option");
+            option.text = "Please Select";
+            option.value = "-1";
+            category.add(option);
             for (var i = 0; i < resp.length; i++) {
                 var option = document.createElement("option");
                 option.text = resp[i].categoryName;
@@ -121,6 +131,7 @@ function populateCategoriesAndSelect(data) {
 function renderEditFormWithData(data){
     loadFormFields(data);
     loadAttachments(data.attachments);
+    allValid();
 }
 
 
@@ -133,6 +144,14 @@ function loadFormFields(data){
     for (var i = 0; i < state.options.length; i++) {
         if (state.options[i].value == data.itemState) {
             state.options[i].selected = true;
+        }
+    }
+
+    //set the listing type
+    let listType = document.getElementById("select_buy_choice");
+    for (let j = 0; j < listType.options.length; j++){
+        if(listType.options[j].value == data.sellType){
+            listType.options[j].selected = true;
         }
     }
     
@@ -150,6 +169,8 @@ function fillTextFieldsWithData(data){
     document.getElementById("inputAddress").value = data.itemAddress;
     document.getElementById("inputCity").value = data.itemCity;
     document.getElementById("inputZip").value = data.itemZip;
+    document.getElementById("phone").value = data.itemPhone;
+    console.log(data);
 }
 
 
@@ -298,4 +319,86 @@ function gatherDeleteAttachments(imgtagClassName){
     }
     result.deleteCt = deleteCt;
     return result;
+}
+
+
+/*Input Validation*/
+function inputValidate(htmlID){
+	//get input type
+	let curInput = document.getElementById(htmlID);
+
+	switch (htmlID){
+		case "edit_name":
+		case "inputAddress":
+		case "inputCity":
+		case "edit_descr":
+			curInput.value = curInput.value.replace(/^\s+/,'');
+			curInput.value = curInput.value.replace(/\s+$/,'');
+			(curInput.value != "")?setWarning(htmlID, 1):setWarning(htmlID,0);
+			break;	
+		case "inputCat":
+		case "inputState":
+		case "select_buy_choice":
+			(curInput.value != -1)?setWarning(htmlID, 1):setWarning(htmlID,0);
+			break;
+		case "inputZip":
+			(inputTest(/^\d{5}$/,curInput.value))?setWarning(htmlID, 1):setWarning(htmlID,0);
+			break;
+		case "phone":
+			(inputTest(/^\d{3}\-\d{3}\-\d{4}$/,curInput.value))?setWarning(htmlID, 1):setWarning(htmlID,0);
+			break;
+		case "edit_price":
+			(inputTest(/^\d{1,9}\.?\d{0,2}$/,curInput.value))?setWarning(htmlID, 1):setWarning(htmlID,0);
+			break;
+		case "myFile":
+            let imgWrapList = document.getElementsByClassName("img-wrap");
+            let curDeletelist = gatherDeleteAttachments("close");
+			(imgWrapList.length - curDeletelist.files.length + curInput.files.length <= 3)?setWarning(htmlID, 1):setWarning(htmlID,0);
+	}
+
+}
+
+function setWarning(htmlID, isValid){
+	if(isValid){
+		document.getElementById(htmlID).setAttribute('data-inputValid',1);
+		document.getElementById(htmlID+"_label").style.color = "black";
+	}else{
+		document.getElementById(htmlID).setAttribute('data-inputValid',0);
+		document.getElementById(htmlID+"_label").style.color = "red";
+	}
+}
+
+function allValid(){
+	let fieldData = {
+		name : document.getElementById('edit_name'),
+		description : document.getElementById('edit_descr'),
+		price : document.getElementById('edit_price'),
+		sell_type : document.getElementById('select_buy_choice'),
+		category : document.getElementById('inputCat'),
+		phone : document.getElementById('phone'),
+		address : document.getElementById('inputAddress'),
+		city : document.getElementById('inputCity'),
+		state : document.getElementById('inputState'),
+		zip : document.getElementById('inputZip'),
+		files : document.getElementById('myFile')
+	}
+
+	let inputOkay = 1;
+	for(let key of Object.keys(fieldData)){
+		inputValidate(fieldData[key].id);
+		if(fieldData[key].getAttribute('data-inputValid') == "0"){inputOkay = 0;}
+    }
+    
+    if(inputOkay){
+        document.getElementById("inputReady").style.display = "none";
+    }else{
+        document.getElementById("inputReady").style.display = "block";
+    }
+	return inputOkay;
+}
+
+/* This function performs extensive input test using regular expression.*/
+function inputTest(regexPattern, targetInput){
+    const regex = RegExp(regexPattern);
+    return regex.test(targetInput);
 }

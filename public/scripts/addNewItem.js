@@ -23,7 +23,6 @@ document.getElementById('addItemSubmit').addEventListener('click', (event) => {
 
 	//Check form data
 	if(allValid()){
-		document.getElementById("inputReady").style.display="none";
 		let data = getFormFields();
 
 		//modal for saving screen
@@ -56,8 +55,6 @@ document.getElementById('addItemSubmit').addEventListener('click', (event) => {
 				loadingModal.textContent = err;
 				reloadPage(1000);
 			});	
-	}else{
-		document.getElementById("inputReady").style.display="block";
 	}
 });
 
@@ -153,6 +150,13 @@ function allValid(){
 		inputValidate(fieldData[key].id);
 		if(fieldData[key].getAttribute('data-inputValid') == "0"){inputOkay = 0;}
 	}
+
+	if(inputOkay){
+        document.getElementById("inputReady").style.display = "none";
+    }else{
+        document.getElementById("inputReady").style.display = "block";
+	}
+	
 	return inputOkay;
 }
 
