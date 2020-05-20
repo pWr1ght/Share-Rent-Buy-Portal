@@ -35,21 +35,26 @@ app.use(
 	})
 );
 
+
 // Load users from the data base for authenticaion and store them in the users array
 var users = [];
-(() => {
+let getUser = () => {
 	function initUsers(result) {
 		users = JSON.parse(result);
 	}
 	mngUsers.data.getUsers(initUsers);
-})();
+};
+getUser();
+
 
 // Used in authentication
+
 initializePassport(
-	passport,
-	(email) => users.find((user) => user.email === email),
-	(id) => users.find((user) => user.id === id)
+	passport, 
+	email => users.find(user => user.email === email),  //function for finding the user based on email
+	id => users.find(user => user.id === id)
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method')); // Allows use of action="/logout?_method=DELETE" method="POST" in logout form
@@ -81,6 +86,10 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
 		res.render('login');
 	}
 	mngUsers.data.registerUser(req, res, mysql, complete);
+});
+
+app.post('/updateUsr', checkAuthenticated, async(req, res) => {
+	mngUsers.data.updateUser(req, res, getUser);
 });
 
 app.delete('/logout', checkAuthenticated, (req, res) => {

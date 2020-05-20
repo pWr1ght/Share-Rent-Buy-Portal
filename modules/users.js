@@ -16,6 +16,8 @@ var methods = {
 					email: rows[row].userEmail,
 					password: rows[row].userPassword,
 					name: rows[row].firstName + ' ' + rows[row].lastName,
+					firstname: rows[row].firstName,
+					lastname: rows[row].lastName,
 					phone: rows[row].userPhone
 				};
 				queryOut.push(item);
@@ -93,6 +95,48 @@ var methods = {
 			}
 		}
 		mysql.pool.query(validate, usrEmail, validateReq);
+	},
+
+	//This function updates user info
+	updateUser: async function(req, res, callback){
+		const pool = require('../modules/dbcon').pool;		
+		//get the existing user info
+		pool.query('SELECT * FROM Users WHERE userID = ?',[req.body.userID], async function(err, rows){
+			if(err){
+				res.send({error:true, status:err});
+			}
+
+			const bcrypt = require('bcrypt');
+
+			// Hash the password
+			let hashedPassword = rows[0].userPassword;
+			if(req.body.password != ""){
+				try {
+					hashedPassword = await bcrypt.hash(req.body.password, 10);
+				} catch (error) {
+					console.log(error);
+					res.send({error:true, status:error});
+				}
+			}
+
+			let newInfo = [
+				req.body.firstname || rows[0].firstName,
+				req.body.lastname || rows[0].lastName,				
+				hashedPassword,
+				req.body.email || rows[0].userEmail,
+				req.body.phone || rows[0].userPhone,
+				rows[0].userID
+			]
+
+			pool.query('UPDATE Users SET firstName = ?, lastName = ?, userPassword = ?, userEmail = ?, userPhone = ? WHERE userID = ?', newInfo, function(err, rows){
+				if(err){
+					res.send({error:true, status:err});
+				}
+				callback();   //run this function after the user has been updated
+				res.send({error:false, status:"User updated successfully!"});
+			});
+		})
 	}
+
 };
 module.exports.data = methods;

@@ -1,45 +1,51 @@
-<div class="container">
-    <div class="row" id="cards">
-        {{#if data}}
-        {{#each data}}
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
+<div class="container my-5">
+    <div class="h1">Welcome back, {{data.username}}!</div> 
+    <button class="badge badge-success" id="editInfo">Edit your info</button>
+</div>
+<div class="container" id="cards">
+    <div class="row" >
+        {{#if data.data}}
+        {{#each data.data}}
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
                     {{#if attachments}}
                     {{#each attachments}}
                         {{#with this}}
                             <span class="attachdetails_{{this.ListingId}}" data-filename="{{this.AttName}}" data-id="{{this.AttachId}}" data-deleted="1" hidden></span>
-                            <img src="{{this.AttLink}}" class="img-thumbnail" style="max-width:33%; height: auto" alt="/Files/image-unavailable1.png">
+                            <img src="{{this.AttLink}}" class="card-img-top-edit img-thumbnail"  alt="/Files/image-unavailable1.png">
                         {{/with}}
                     {{/each}}
                     {{else}}
-                        <img src="{{this.firstpic}}" class="img-thumbnail" style="max-width:33%; height: auto" alt="/Files/image-unavailable1.png">
+                        <img src="{{this.firstpic}}" class="card-img-top-edit img-thumbnail" alt="/Files/image-unavailable1.png">
                     {{/if}}
-                    
+                </div>    
                     <div class="card-body">
-                        <h5 id="name{{id}}" class="card-title">{{itemName}}</h5>
-                        <!--<textarea readonly id="descr{{id}}" class="card-text form-control"
-                            rows="5">{{itemDescription}}</textarea>-->
+                        <h5 id="name{{id}}" class="card-title text-center">{{itemName}}</h5>
+                        <hr>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h5 id="price{{id}}" class="card-subtitle mb-2 text-muted">Price: ${{itemPrice}}</h5>
+                                <h5 id="class{{id}}" class="card-subtitle my-2 text-muted">Category: {{categoryName}}</h6>
+                            </li>
+                            <li id="address{{id}}" class="list-group-item">
+                                <h5 class="card-subtitle my-2 text-muted">Location:</h5>
+                                <h6 class="card-subtitle my-2 text-muted">{{itemAddress}}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">{{itemCity}}, {{itemState}} {{itemZip}}</h5>
+                            </li>
+                            <hr>
+                        </ul>
 
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                        <li class="list-group-item">
-                            <h5 id="price{{id}}" class="card-subtitle mb-2 text-muted">Price: ${{itemPrice}}</h5>
-                            <h6 id="class{{id}}" class="card-subtitle mb-2 text-muted">Category: {{categoryName}}</h6>
-                        </li>
-                        <li id="address{{id}}" class="list-group-item">
-                            <p>Location</p>{{itemAddress}}<br>{{itemCity}}, {{itemState}} {{itemZip}}
-                        </li>
-                    </ul>
-                    <div class="card-body">
+                    
+                    <div class="card-body text-center">
                         <input hidden id="item{{id}}" value="{{id}}" type="text">
                         <a id="edit{{id}}" name="edit{{id}}" href="#" class="card-link btn btn-outline-primary"
                             onclick="editItem({{id}})">Edit</input>
                             <a id="delete{{id}}" href="#" class="card-link btn btn-outline-warning"
                                 onclick="deleteItem({{id}})">Delete</a>
                     </div>
-                </div>
+                
             </div>
         </div>
         {{/each}}
@@ -319,5 +325,53 @@
           </div>
         </div>    
 
+<!-- Edit user info Modal -->
+<div class="modal fade" id="editUserInfo" tabindex="-1" role="dialog" aria-labelledby="editUserInfoCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="editUserInfoLongTitle">Edit Your Information</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="editUserReady" class="h6" value="1" style="color:red;display:none;">*Invalid Input(s)</div>  
+        <div class="row p-5">
+            <form id="editUser">   
+                <div class="form-row">
+                    <input type="text" id="userId" hidden>
+                    <div class="col-12 mb-2">
+                        <label for="edit_firstname" id="edit_firstname_label">First Name</label>
+                        <input type="text" class="form-control" name="edit_firstname" id="edit_firstname">
+                    </div>
+                    <div class="col-12 mb-2">
+                        <label for="edit_lastname" id="edit_lastname_label">Last Name</label>
+                        <input type="text" class="form-control" name="edit_lastname" id="edit_lastname">
+                    </div>
+                    <div class="col-12 mb-2">
+                        <label for="edit_email" id="edit_email_label">Email</label>
+                        <input type="email" class="form-control" name="edit_email" id="edit_email">
+                    </div>
+                    <div class="col-12 mb-2">
+                        <label for="edit_password" id="edit_password_label">Password (leave blank if no change)</label>
+                        <input type="password" class="form-control" name="edit_password" id="edit_password">
+                    </div>
+                    <div class="col-12">
+                        <label for="userphone" id="userphone_label">Phone Number (xxx-xxx-xxxx)</label>
+                        <input type="tel" class="form-control" name="userphone" id="userphone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" >
+                    </div>
+                </div>
+            </form>    
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-outline-primary" onclick="saveUser()">Save</button>
+        <button type="button" class="btn btn-outline-warning" data-dismiss="modal">Cancel</button>        
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="/scripts/edititem.js"></script>
+<script src="/scripts/editUser.js"></script>

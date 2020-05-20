@@ -6,11 +6,11 @@ module.exports = function () {
 
 	/* This function extracts the current non-expired listings and renders the home page with the data.*/
 	function renderItems(req, res) {
-
+        console.log(req.user);
         function setItems(data){
             res.render('editItem', {data});
         }
-		get_set_items.data.getUsersItems(req.user.id, setItems) ;
+		get_set_items.data.getUsersItems(req.user, setItems) ;
     }
 
     // Deletes an item by the id and sends the refresh itemlist
@@ -30,7 +30,7 @@ module.exports = function () {
                         res.send({"err":err});
                     }
                     //return the refresh itemlist back to caller
-                    get_set_items.data.getUsersItems(req.user.id, (data)=>{res.send({data})});
+                    get_set_items.data.getUsersItems(req.user, (data)=>{res.send({data})});
                 });
             }else{
                 res.send({"err":"No item found!"});

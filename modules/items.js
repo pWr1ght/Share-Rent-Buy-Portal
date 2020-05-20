@@ -1,6 +1,6 @@
 var methods = {
 
-	getUsersItems: function(id, complete) {
+	getUsersItems: function(thisUser, complete) {
 		const mysql = require('./dbcon');
 		var itemQuery = 'SELECT i.*, c.*, u.*, a.attachmentID, a.attName, a.attDescr FROM Items i ' +
 		'LEFT JOIN Categories c ON c.categoryId = i.catID '+
@@ -58,9 +58,10 @@ var methods = {
 			}
 			//console.log(queryOut);
 			context.data = queryOut;
-			complete(queryOut);
+			context.username = thisUser.name;
+			complete(context);
 		}
-		mysql.pool.query(itemQuery, id , returnItems);
+		mysql.pool.query(itemQuery, thisUser.id , returnItems);
 	},
 
 	getItem: function(id, complete) {

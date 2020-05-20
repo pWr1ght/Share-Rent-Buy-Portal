@@ -37,6 +37,12 @@ a:hover {
   object-fit: cover;
 }
 
+.card-img-top-edit{
+  width: 30%;
+  height:10vw;
+  object-fit: cover;
+}
+
 .disp-card{
   margin: 2rem;
 }
