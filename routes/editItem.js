@@ -3,6 +3,7 @@ module.exports = function () {
     const get_set_items = require('../modules/items.js');
     const router = express.Router();
     const fetch = require('node-fetch');
+    const mngUsers = require('../modules/users.js');
 
 	/* This function extracts the current non-expired listings and renders the home page with the data.*/
 	function renderItems(req, res) {
@@ -97,18 +98,11 @@ module.exports = function () {
         }
     }
 
-    function checkAuthenticated(req, res, next){
-        if(req.isAuthenticated()){
-            return next();
-        }    
-        res.redirect('/login');
-    }
-
-    router.delete('/', checkAuthenticated, removeItemAndSendUpdatedList);
-    router.post('/id', checkAuthenticated, editEditItem);
-    router.post('/save', checkAuthenticated, saveItem);
+    router.delete('/', mngUsers.data.checkAuthenticated, removeItemAndSendUpdatedList);
+    router.post('/id', mngUsers.data.checkAuthenticated, editEditItem);
+    router.post('/save', mngUsers.data.checkAuthenticated, saveItem);
     router.get('/cats', getCats);
-    router.get('/', checkAuthenticated, renderItems);
+    router.get('/', mngUsers.data.checkAuthenticated, renderItems);
     
-	return router; //Branch test II
+	return router;
 }();

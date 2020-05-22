@@ -54,28 +54,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method')); // Allows use of action="/logout?_method=DELETE" method="POST" in logout form
 
-//Specify routes
-app.get('/login', checkNotAuthenticated, (req, res) => {
-	res.render('login');
-});
-
-app.post(
-	'/login',
-	checkNotAuthenticated,
-	passport.authenticate('local', {
-		successRedirect: '/',
-		failureRedirect: '/login',
-		failureFlash: true
-	})
-);
-
-app.get('/register', checkNotAuthenticated, (req, res) => {
+// Renders register user page
+app.get('/register', mngUsers.data.checkNotAuthenticated, (req, res) => {
 	res.render('register');
 });
 
-app.use('/locate', require('./routes/locate.js')); // This can be deleted
-
-app.post('/register', checkNotAuthenticated, async (req, res) => {
+// Registers and saves user in DB. This function has to stay here because of the global users array. 
+app.post('/register', mngUsers.data.checkNotAuthenticated, async (req, res) => {
 	function complete(input) {
 		users.push(input);
 		res.render('login');
@@ -83,13 +68,14 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
 	mngUsers.data.registerUser(req, res, mysql, complete);
 });
 
-app.delete('/logout', checkAuthenticated, (req, res) => {
+// Logs out the user
+app.delete('/logout', mngUsers.data.checkAuthenticated, (req, res) => {
 	req.logOut();
 	res.redirect('/login');
 });
 
+// Specify remaining routes
 app.use('/', require('./routes/index.js'));
-app.use('/edititem', require('./routes/editItem.js'));
 
 //Go here when 404
 app.use(function(req, res) {
@@ -103,20 +89,6 @@ app.use(function(err, req, res, next) {
 	res.status(500);
 	res.render('500');
 });
-
-function checkAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) {
-		return next();
-	}
-	res.redirect('/login');
-}
-
-function checkNotAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) {
-		return res.redirect('/');
-	}
-	next();
-}
 
 //Server
 app.listen(app.get('port'), function() {

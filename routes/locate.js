@@ -3,7 +3,6 @@ module.exports = function () {
     const fetch = require("node-fetch");
     var router = express.Router();
 
-
 	//Gets the distance and time from user to the listed item
 	function getCoord(req, res, next) {
 		
