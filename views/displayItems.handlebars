@@ -106,11 +106,11 @@ function errorHandler(err) {
 }
 
 
-  if(navigator.geolocation) {       
-      // timeout at 60000 milliseconds (60 seconds)
-      let options = {timeout:60000};
-      navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
-  } 
+if(navigator.geolocation) {       
+    // timeout at 60000 milliseconds (60 seconds)
+    let options = {timeout:60000};
+    navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
+} 
 </script>
 <script src="https://twitter.github.io/typeahead.js/js/handlebars.js"></script>
 

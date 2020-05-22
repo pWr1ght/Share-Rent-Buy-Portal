@@ -6,7 +6,7 @@ module.exports = (function() {
 	// queries select item
 	router.get('/', function(req, res) {
 		var idName = req.id_label;
-		console.log(idName);
+		// console.log(idName);
 		//NOTE: u.UserID for Select if just want email
 		// var sql = 'SELECT * FROM Items i INNER JOIN Users u INNER JOIN Attachments a on i.userID = u.userID where i.itemID = ' + idName  + ' and a.itemID = ' + idName
 		// var sql = 'SELECT * FROM Items i INNER JOIN Users u on i.userID = u.userID where i.itemID = ' + idName
@@ -23,7 +23,7 @@ module.exports = (function() {
 			if (result[0].attDescr === null) {
 				result[0].attDescr = '/Files/image-unavailable1.png';
 			}
-			console.log(result[0].attDescr);
+			// console.log(result[0].attDescr);
 			// res.send('you queried the database')
 			res.render('displayItem', result[0]);
 		});
