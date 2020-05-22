@@ -1,6 +1,6 @@
 var methods = {
 
-	getUsersItems: function(id, complete) {
+	getUsersItems: function(thisUser, complete) {
 		const mysql = require('./dbcon');
 		var itemQuery = 'SELECT i.*, c.*, u.*, a.attachmentID, a.attName, a.attDescr FROM Items i ' +
 		'LEFT JOIN Categories c ON c.categoryId = i.catID '+
@@ -34,6 +34,8 @@ var methods = {
 						"author": rows[row].firstName + ' ' + rows[row].lastName,
 						"authorPh": rows[row].userPhone,
 						"authorEmail": rows[row].userEmail,
+						"sellType": (rows[row].sellType == null)?-1:rows[row].sellType,
+						"itemPhone": rows[row].itemPhone,
 						"attachments" : [],
 						"firstpic":"/Files/image-unavailable1.png"
 					};
@@ -56,9 +58,10 @@ var methods = {
 			}
 			//console.log(queryOut);
 			context.data = queryOut;
-			complete(queryOut);
+			context.username = thisUser.name;
+			complete(context);
 		}
-		mysql.pool.query(itemQuery, id , returnItems);
+		mysql.pool.query(itemQuery, thisUser.id , returnItems);
 	},
 
 	getItem: function(id, complete) {
@@ -90,6 +93,8 @@ var methods = {
 					"author": rows[0].firstName + ' ' + rows[0].lastName,
 					"authorPh": rows[0].userPhone,
 					"authorEmail": rows[0].userEmail,
+					"sellType": (rows[0].sellType == null)?-1:rows[0].sellType,
+					"itemPhone": rows[0].itemPhone,
 					"attachments" : []
 				};
 
@@ -119,9 +124,11 @@ var methods = {
 		'`itemState` = ?, '+
 		'`itemZip` = ?, '+
 		'`itemLat` = ?, '+
-		'`itemLong` = ? '+
+		'`itemLong` = ?, '+
+		'`itemPhone` = ?, '+
+		'`sellType` = ? '+
 		' WHERE `itemID` = ?; ';
-		var values = [ data.itemName, data.catID, data.itemDescription, data.itemPrice, data.itemAddress, data.itemCity, data.itemState, data.itemZip, data.lat, data.long, data.itemID ];
+		var values = [ data.itemName, data.catID, data.itemDescription, data.itemPrice, data.itemAddress, data.itemCity, data.itemState, data.itemZip, data.lat, data.long, data.itemPhone, data.sellType, data.itemID ];
 		function saveUpdates(err, rows){
 			if (err) {
 				console.log(err);

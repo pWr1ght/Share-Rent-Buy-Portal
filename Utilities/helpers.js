@@ -3,13 +3,14 @@ let distanceFixed = function(distance) {
 };
 
 let capitalize = function(cap) {
+	console.log(cap);
 	return cap.charAt(0).toUpperCase() + cap.slice(1);
 };
 
 let json = function(obj) {
 	// console.log(JSON.stringify(obj), "this is")
 	return JSON.stringify(obj);
-}
+};
 
 let sellBadges = function(sellType) {
 	if (sellType == 'Buy') {
@@ -23,4 +24,4 @@ let sellBadges = function(sellType) {
 	}
 };
 
-module.exports = { distanceFixed, capitalize, sellBadges, json};
+module.exports = { distanceFixed, capitalize, sellBadges, json };

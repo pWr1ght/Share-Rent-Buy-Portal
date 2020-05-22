@@ -1,49 +1,52 @@
 <div class="container mt-5 shadow px-5 py-2">
-  <div class="display-4 mb-5">Add New Item</div>
-  <form id="addForm">
+  <div class="display-4 mb-5">Add New Item
+    <div id="inputReady" class="h6" value="1" style="color:red;display:none;">*Invalid Input(s)</div>
+  </div>
+  
+  <form id="addForm">   
     <div id="divInForm" class="form-row">
       <div class="col-sm-9">
-        <label for="name">Item name</label>
+        <label for="name" id="name_label">Item name</label>
         <input type="text" class="form-control" name="name" id="name" placeholder="Item Name">
       </div>
       <div class="col-sm-3">
-        <label for="price">Price</label>
+        <label for="price" id="price_label">Price</label>
         <input type="text" class="form-control" name="price" id="price" placeholder="Price">
       </div>
       <div class="col-12 mt-2">
-        <label for="description">Item Description</label>
+        <label for="description" id="description_label">Item Description</label>
         <textarea class="form-control" name="description" id="description" rows="10" placeholder="Item Description"></textarea>
       </div>
-      <div class="col-sm-6 mt-2">
-        <label for="select_buy_choice">Share/Rent/Buy?</label>
+      <div class="col-sm-4 mt-2">
+        <label for="select_buy_choice" id="select_buy_choice_label">Share/Rent/Buy?</label>
         <select class="form-control" name="select_buy_choice" id="select_buy_choice">
-          <option >Please Select</option>
+          <option value = "-1">Please Select</option>
           <option value="Buy">Buy</option>
           <option value="Rent">Rent</option>
           <option value="Share">Share</option>
         </select> 
       </div>
-      <div class="col-sm-6 mt-2">
-        <label for="categories">Category</label>
+      <div class="col-sm-4 mt-2">
+        <label for="categories" id="categories_label">Category</label>
         <select class="form-control" name="categories" id="categories">
         </select>
       </div>
-      <div class="col-sm-6 mt-2">
-        <label for="phone">Your Phone Number</label>
-        <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone Number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+      <div class="col-sm-4 mt-2">
+        <label for="phone" id="phone_label">Phone Number (xxx-xxx-xxxx)</label>
+        <input type="tel" class="form-control" name="phone" id="phone" placeholder="111-111-1111" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" >
       </div>
       <div class="col-12 mt-2">
-        <label for="address">Street Address</label>
+        <label for="address" id="address_label">Street Address</label>
         <input type="text" class="form-control" name="address" id="address" placeholder="Street Address">
       </div>
       <div class="col-sm-5 mt-2">
-        <label for="city">City</label>
+        <label for="city" id="city_label">City</label>
         <input type="text" class="form-control" name="city" id="city" placeholder="City">
       </div>
       <div class="col-sm-4 mt-2">
-        <label for="state">State</label>
+        <label for="state" id="state_label">State</label>
         <select class="form-control" name="state" id="state">
-              <option value="">
+              <option value="-1">
                 Please Select...
               </option>
               <option value="AK">
@@ -205,7 +208,7 @@
         </select>
       </div>
       <div class="col-sm-3 mt-2">
-        <label for="zip">Zip Code</label>
+        <label for="zip" id="zip_label">Zip Code</label>
         <input type="text" class="form-control" name="zip" id="zip" placeholder="Zip Code">
       </div>
     </div>
@@ -216,7 +219,7 @@
         <div class="col-sm-12">
             <div class="form-row mt-2 mb-1">
                 <div class="form-group col-sm-6">
-                    <label for="uploadForm">Attachments (maximum 3)</label>
+                    <label for="uploadForm" id="myFile_label">Attachments (maximum 3)</label>
                     <form id="uploadForm" enctype="multipart/form-data" method="post" name="fileinfo" accept="image/*">
                         <input id="myFile" type="file" name="aws_multiple_images" multiple />
                         <p id="msg"></p>

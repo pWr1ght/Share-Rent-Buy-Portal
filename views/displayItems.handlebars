@@ -4,7 +4,7 @@
     Search Results for {{capitalize searchName}}: {{searchResult.length}}
   </h3>
   {{#if searchResult}}
-    <div class="row no-gutters justify-content-between">
+    <div class="row no-gutters justify-content-start">
       {{#each searchResult}}
         <div class=" col-auto mb-4 ml-2">
           <div class="card" style="width: 24rem; min-width:24rem">
@@ -42,69 +42,58 @@
             </div>
           </div>
         </div>
+        {{/each}}
       {{else}}
-        <h3>
+        <span>
           No items
-        </h3>
-      {{/each}}
+        </span>
     </div>
   {{/if}}
+</div>
    {{#if searchResult}}
      <div id="mapid"></div>
   {{/if}}
-</div>
 </br>  
 </div>
 
 
 <script>
 function showLocation(position) {
-  var myLatitude = position.coords.latitude;
-  var mylongitude = position.coords.longitude;
-  
+  let myLatitude = position.coords.latitude;
+  let mylongitude = position.coords.longitude;
   {{!-- getting the data json data and cleaning escaped data --}}
-  var data = "{{json searchResult}}"
-  data = data.replace(/(&quot\;)/g,"\"")
-  let dataArray = JSON.parse(data);
-  console.log(dataArray)
+  let data = {{{json searchResult}}}
+  if (data){
+    {{!-- set up Map --}}
+    let map = L.map('mapid').setView([myLatitude, mylongitude], 10);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
 
-  {{!-- set up Map --}}
-  var map = L.map('mapid').setView([myLatitude, mylongitude], 7.5);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-  {{!-- L.marker([myLatitude, mylongitude]).addTo(map) 
-    .bindPopup("you are here" + '<br>')
-    .openPopup(); --}}
-  
-
-
-  var redMarker = L.AwesomeMarkers.icon({
-    icon: 'coffee',
-    markerColor: 'red'
-  });
-      
-  L.marker([myLatitude, mylongitude], {icon: redMarker}).addTo(map)
-    .bindPopup("Your Location" + '<br>')
-    .openPopup();
-
-  var colors = ['blue', 'green', 'purple', 'orange', 'beige', 'darkblue', 'cadetblue', 'darkpurple', 'white', 'pink', 'lightblue', 'lightgreen', 'gray', 'black', 'lightgray'];
-  
-  console.log(redMarker)
-  dataArray.forEach(function(entry){
-    var name = entry.itemName
-    var address = entry.itemAddress + "\n" + entry.itemCity + "," + entry.itemState
-    var randomItem = colors[Math.floor(Math.random()*colors.length)];
-    console.log(randomItem);
-    var colorMarker = L.AwesomeMarkers.icon({
-    markerColor: randomItem
+    let redMarker = L.AwesomeMarkers.icon({
+      icon: 'coffee',
+      markerColor: 'red'
     });
-
-    L.marker([entry.itemLat, entry.itemLong], {icon: colorMarker} ).addTo(map) 
-      .bindPopup(entry.itemName + '<br>' + address)
+        
+    L.marker([myLatitude, mylongitude], {icon: redMarker, zIndexOffset: 250}).addTo(map)
+      .bindPopup("Your Location" + '<br>')
       .openPopup();
-    });
+
+    
+    let flagColors = ['blue', 'green', 'purple', 'orange', 'beige', 'darkblue', 'cadetblue', 'darkpurple', 'white', 'pink', 'lightblue', 'lightgreen', 'gray', 'black', 'lightgray'];
+    
+    data.forEach(function(entry,i){
+      let name = entry.itemName
+      let address = `${entry.itemAddress}\n${entry.itemCity}, ${entry.itemState}`
+      let randomColor = flagColors[i%flagColors.length];
+      let colorMarker = L.AwesomeMarkers.icon({
+      markerColor: randomColor
+      });
+      L.marker([entry.itemLat, entry.itemLong], {icon: colorMarker, zIndexOffset: 1} ).addTo(map) 
+        .bindPopup(`${entry.itemName}<br>${address}`)     
+      });
+
+  }
 }
 
 
@@ -116,18 +105,12 @@ function errorHandler(err) {
   }
 }
 
-if(navigator.geolocation) {       
-    // timeout at 60000 milliseconds (60 seconds)
-    var options = {timeout:60000};
-    navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
-}
 
-
-
-
-
-
-  
+  if(navigator.geolocation) {       
+      // timeout at 60000 milliseconds (60 seconds)
+      let options = {timeout:60000};
+      navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
+  } 
 </script>
 <script src="https://twitter.github.io/typeahead.js/js/handlebars.js"></script>
- 
+

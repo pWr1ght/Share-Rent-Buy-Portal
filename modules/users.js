@@ -16,6 +16,8 @@ var methods = {
 					email: rows[row].userEmail,
 					password: rows[row].userPassword,
 					name: rows[row].firstName + ' ' + rows[row].lastName,
+					firstname: rows[row].firstName,
+					lastname: rows[row].lastName,
 					phone: rows[row].userPhone
 				};
 				queryOut.push(item);
