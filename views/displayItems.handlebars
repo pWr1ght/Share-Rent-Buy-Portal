@@ -42,15 +42,15 @@
             </div>
           </div>
         </div>
+        {{/each}}
       {{else}}
-        <h3>
+        <span>
           No items
-        </h3>
-      {{/each}}
+        </span>
     </div>
   {{/if}}
    {{#if searchResult}}
-     <div id="mapid"></div>
+     <div id="mapid" onload="getNav()"></div>
   {{/if}}
 </div>
 </br>  
@@ -103,11 +103,13 @@ function errorHandler(err) {
   }
 }
 
-if(navigator.geolocation) {       
-    // timeout at 60000 milliseconds (60 seconds)
-    let options = {timeout:60000};
-    navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
-} 
+function getNav(){
+  if(navigator.geolocation) {       
+      // timeout at 60000 milliseconds (60 seconds)
+      let options = {timeout:60000};
+      navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
+  } 
+}
 </script>
 <script src="https://twitter.github.io/typeahead.js/js/handlebars.js"></script>
 
