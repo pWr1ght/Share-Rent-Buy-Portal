@@ -12,11 +12,11 @@ router.get('/', (req, res) => {
 });
 
 closestItemSearchFunc = (res, req) => {
-	let { search, lat, long } = req.query;
+	let { search, lat, long, distance } = req.query;
 	let searchItemName = search;
 	pool.query(
-		'SELECT *, ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat)) * .000621371192 as distance FROM Items WHERE ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat))* .000621371192 < 50 AND itemName COLLATE UTF8_GENERAL_CI LIKE ? ORDER BY DISTANCE ASC LIMIT 1',
-		[ long, lat, long, lat, `%${searchItemName}%` ],
+		'SELECT *, ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat)) * .000621371192 as distance FROM Items WHERE ST_DISTANCE_SPHERE(POINT(?,?),POINT(itemLong,itemLat))* .000621371192 < ? AND itemName COLLATE UTF8_GENERAL_CI LIKE ? ORDER BY DISTANCE ASC LIMIT 1',
+		[ long, lat, long, lat, distance, `%${searchItemName}%` ],
 		(err, result) => {
 			if (err) {
 				res.render('displayItems', { err });

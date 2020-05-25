@@ -5,9 +5,13 @@ function performSearch(event) {
 	var search = document.getElementById('input_search').value;
 	var lat = document.getElementById('user_lat').value;
 	var long = document.getElementById('user_lon').value;
-
+	var dist = document.getElementById('input_distance').value;
+	
+	if(dist < 0 || !dist) {
+		dist=50;
+	}
 	if (!search) {
 		return;
 	}
-	window.location.href = `/searchResults?search=${search}&lat=${lat}&long=${long}`;
+	window.location.href = `/searchResults?search=${search}&lat=${lat}&long=${long}&distance=${dist}`;
 }
