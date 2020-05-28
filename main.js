@@ -73,6 +73,10 @@ app.post('/register', mngUsers.data.checkNotAuthenticated, async (req, res) => {
 	mngUsers.data.registerUser(req, res, mysql, complete);
 });
 
+app.post('/updateUsr', mngUsers.data.checkAuthenticated, async(req, res) => {
+	mngUsers.data.updateUser(req, res, getUser);
+});
+
 // Logs out the user
 app.delete('/logout', mngUsers.data.checkAuthenticated, (req, res) => {
 	req.logOut();
