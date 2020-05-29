@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("editInfo").addEventListener('click',()=>{
-        $("#editUserInfo").modal();
-        getUserInfo();
-    });
+    if(document.getElementById("editInfo") != undefined){
+        document.getElementById("editInfo").addEventListener('click',()=>{
+            $("#editUserInfo").modal();
+            getUserInfo();
+        });
+    }   
 });
 
 
@@ -16,6 +18,7 @@ function getUserInfo(){
         }
         return data1.json();
     }).then((data2)=>{
+        console.log(data2.auth);
         fillUserInfo(data2.auth);
         allValid2();
     }).catch((err) => {

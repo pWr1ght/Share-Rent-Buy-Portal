@@ -28,6 +28,28 @@ var methods = {
 		mysql.pool.query(usersQuery, returnUsers);
 	},
 
+	checkEmailExists: function(complete) {
+		const mysql = require('./dbcon');
+		function returnResult(err, rows, fields) {
+			var queryOut = {};
+			if (err) {
+				queryOut.result = "Error SQL query";
+				queryOut.error = true;
+			}
+			
+			else if(rows.length != 0){
+				queryOut.result = "Email exists!";
+				queryOut.error = false;
+			}else{
+				queryOut.result = "Email okay"
+				queryOut.error = false;
+			}
+			//console.log(queryOut);
+			complete(JSON.stringify(queryOut));
+		}
+		mysql.pool.query('SELECT * FROM Users WHERE userEmail=?', returnResult);
+	},
+
 	// This function receives input from the user registration form. It verifies that the user
 	// does with the email does not exist yet. The user is then saved to the data base.
 	// Registered user is stringified and returned to the calling function so it may be added
@@ -82,7 +104,9 @@ var methods = {
 							email: rows[0].userEmail,
 							password: rows[0].userPassword,
 							name: rows[0].firstName + ' ' + rows[0].lastName,
-							phone: rows[0].userPhone
+							phone: rows[0].userPhone,
+							firstname: rows[0].firstName,
+							lastname: rows[0].lastName,
 						};
 						// Return the new user to the calling function
 						complete(item);
