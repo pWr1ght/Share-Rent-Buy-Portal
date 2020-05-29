@@ -18,7 +18,6 @@ function getUserInfo(){
         }
         return data1.json();
     }).then((data2)=>{
-        console.log(data2.auth);
         fillUserInfo(data2.auth);
         allValid2();
     }).catch((err) => {
