@@ -7,7 +7,7 @@
             <form action="/register" method="POST">
                 <div class="form-group">
                     <label for="edit_firstname" id="edit_firstname_label">First Name</label>
-                    <input type="text" id="edit_firstname" name="fname" class="form-control" required>      
+                    <input type="text" id="edit_firstname" name="fname" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="edit_lastname" id="edit_lastname_label">Last Name</label>
@@ -20,25 +20,41 @@
                 <div class="form-group">
                     <label for="userphone" id="userphone_label">Phone</label>
                     <input type="text" id="userphone" name="phone" class="form-control" required>
-                </div>              
+                </div>
                 <div class="form-group ">
-                    <label for="edit_password" id="edit_password_label">Password</label>
+                    <label for="edit_pwd" id="edit_pwd_label">Password</label>
                     <div class="input-group">
-                        
-                        <input type="password" id="edit_password" name="password" class="form-control"
-                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
-                            title="Must contain 1 or more number, 1 uppercase, 1 
-                            lowercase letter, and 8 or more characters" 
+
+                        <input type="password" id="edit_pwd" name="pwd" class="form-control"
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain 1 or more number, 1 uppercase, 1 
+                            lowercase letter, and 8 or more characters"
                             placeholder="1 or more number, 1 uppercase, 1 lowercase letter, and 8 or more characters"
-                        required>
-                        <div class="input-group-append">
-                            <span class="material-icons input-group-text" id="passwordOK">done_outline</span>
+                            required>
+                        <div class="input-group-append" >
+                            <span style="display: none;" class="material-icons input-group-text" id="pwd_match">done_outline</span>
                         </div>
                     </div>
                 </div>
-                <button id="registerBtn" class="btn btn-light" type="submit">Register</button>
+                <div class="form-group ">
+                    <label for="edit_password" id="edit_password_label">Match Password</label>
+                    <div class="input-group">
+
+                        <input type="password" id="edit_password" name="password" class="form-control"
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain 1 or more number, 1 uppercase, 1 
+                            lowercase letter, and 8 or more characters"
+                            placeholder="1 or more number, 1 uppercase, 1 lowercase letter, and 8 or more characters"
+                            required>
+                        <div class="input-group-append" >
+                            <span style="display: none;" class="material-icons input-group-text" id="passwordOK">done_outline</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button id="registerBtn" class="btn btn-outline-info btn-block" type="submit">Register</button>
+                </div>
+
             </form>
-            
+
         </div>
         <a class="p-3" href="/login">Login Here</a>
     </div>
