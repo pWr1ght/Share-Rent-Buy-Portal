@@ -27,8 +27,8 @@ var methods = {
 		}
 		mysql.pool.query(usersQuery, returnUsers);
 	},
-
-	checkEmailExists: function(complete) {
+/*
+	checkEmailExists: function(req, res, complete) {
 		const mysql = require('./dbcon');
 		function returnResult(err, rows, fields) {
 			var queryOut = {};
@@ -39,7 +39,7 @@ var methods = {
 			
 			else if(rows.length != 0){
 				queryOut.result = "Email exists!";
-				queryOut.error = false;
+				queryOut.error = true;
 			}else{
 				queryOut.result = "Email okay"
 				queryOut.error = false;
@@ -47,9 +47,9 @@ var methods = {
 			//console.log(queryOut);
 			complete(JSON.stringify(queryOut));
 		}
-		mysql.pool.query('SELECT * FROM Users WHERE userEmail=?', returnResult);
+		mysql.pool.query('SELECT * FROM Users WHERE userEmail=?', [req.body.newEmail], returnResult);
 	},
-
+*/
 	// This function receives input from the user registration form. It verifies that the user
 	// does with the email does not exist yet. The user is then saved to the data base.
 	// Registered user is stringified and returned to the calling function so it may be added
@@ -116,6 +116,7 @@ var methods = {
 			} else {
 				//TODO: Let the user know that they tried to register with an email that already exists in DB
 				console.log('User with this email already exists');
+				complete({error: true, status: 'User with this email already exists!'});
 			}
 		}
 		mysql.pool.query(validate, usrEmail, validateReq);

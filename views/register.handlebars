@@ -22,21 +22,7 @@
                     <input type="text" id="userphone" name="phone" class="form-control" required>
                 </div>
                 <div class="form-group ">
-                    <label for="edit_pwd" id="edit_pwd_label">Password</label>
-                    <div class="input-group">
-
-                        <input type="password" id="edit_pwd" name="pwd" class="form-control"
-                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain 1 or more number, 1 uppercase, 1 
-                            lowercase letter, and 8 or more characters"
-                            placeholder="1 or more number, 1 uppercase, 1 lowercase letter, and 8 or more characters"
-                            required>
-                        <div class="input-group-append" >
-                            <span style="display: none;" class="material-icons input-group-text" id="pwd_match">done_outline</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group ">
-                    <label for="edit_password" id="edit_password_label">Match Password</label>
+                    <label for="edit_password" id="edit_password_label">Password</label>
                     <div class="input-group">
 
                         <input type="password" id="edit_password" name="password" class="form-control"
@@ -49,8 +35,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group ">
+                    <label for="match_password" id="match_password_label">Retype Password</label>
+                    <div class="input-group">
+
+                        <input type="password" id="match_password" name="matchPassword" class="form-control"
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain 1 or more number, 1 uppercase, 1 
+                            lowercase letter, and 8 or more characters"
+                            placeholder="1 or more number, 1 uppercase, 1 lowercase letter, and 8 or more characters"
+                            required>
+                        <div class="input-group-append" >
+                            <span style="display: none;" class="material-icons input-group-text" id="matchOK">done_outline</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <button id="registerBtn" class="btn btn-outline-info btn-block" type="submit">Register</button>
+                    <button id="registerBtn" class="btn btn-outline-info btn-block">Register</button>
                 </div>
 
             </form>
