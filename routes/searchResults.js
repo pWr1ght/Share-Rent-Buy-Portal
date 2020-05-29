@@ -31,12 +31,12 @@ closestItemSearchFunc = (res, req) => {
 				return;
 			}
 			let closestItemFound = result[0];
-			allFoundItemsFunc(closestItemFound, res, lat, long);
+			allFoundItemsFunc(closestItemFound, searchItemName, res, lat, long);
 		}
 	);
 };
 
-allFoundItemsFunc = (closeItem, res, BaseLat, BaseLong) => {
+allFoundItemsFunc = (closeItem, searchTerm, res, BaseLat, BaseLong) => {
 	pool.query(
 		'SELECT i.*, a.attachmentID, a.attName, a.attDescr, ST_DISTANCE_SPHERE(POINT(?,?),POINT(i.itemLong,i.itemLat)) * .000621371192 as distanceFromSearch,ST_DISTANCE_SPHERE(POINT(?,?),POINT(i.itemLong,i.itemLat)) * .000621371192 as distanceItemToItem FROM Items i LEFT JOIN Attachments a ON a.itemID = i.itemID WHERE ST_DISTANCE_SPHERE(POINT(?,?),POINT(i.itemLong,i.itemLat))* .000621371192 < 10 AND i.itemName COLLATE UTF8_GENERAL_CI LIKE ? GROUP BY i.itemID ORDER BY distanceFromSearch ASC',
 		[
@@ -46,7 +46,7 @@ allFoundItemsFunc = (closeItem, res, BaseLat, BaseLong) => {
 			closeItem.itemLat,
 			closeItem.itemLong,
 			closeItem.itemLat,
-			`%${closeItem.itemName}%`
+			`%${searchTerm}%`
 		],
 		(err2, allFoundItems) => {
 			if (err2) {
@@ -57,7 +57,7 @@ allFoundItemsFunc = (closeItem, res, BaseLat, BaseLong) => {
 			if (allFoundItems.length == 0) {
 				res.render('displayItems', {
 					searchResult: allFoundItems,
-					searchName: closeItem.itemName,
+					searchName: searchTerm,
 					empty: 'No items found'
 				});
 				return;
@@ -66,7 +66,7 @@ allFoundItemsFunc = (closeItem, res, BaseLat, BaseLong) => {
 			for(var row in allFoundItems){
 				allFoundItems[row].attDescr = (allFoundItems[row].attDescr === null) ? "./Files/image-unavailable1.png" : allFoundItems[row].attDescr;
 			}
-			res.render('displayItems', { searchResult: allFoundItems, searchName: closeItem.itemName });
+			res.render('displayItems', { searchResult: allFoundItems, searchName: searchTerm });
 			return;
 		}
 	);
