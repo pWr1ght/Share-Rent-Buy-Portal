@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("editInfo").addEventListener('click',()=>{
-        $("#editUserInfo").modal();
-        getUserInfo();
-    });
+    if(document.getElementById("editInfo") != undefined){
+        document.getElementById("editInfo").addEventListener('click',()=>{
+            $("#editUserInfo").modal();
+            getUserInfo();
+        });
+    }   
 });
 
 

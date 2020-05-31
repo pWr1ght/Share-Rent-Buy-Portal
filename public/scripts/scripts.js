@@ -59,7 +59,8 @@ function getNearby(){
 function setNavbar(resp){
     if(resp.auth != "none"){
         //alert("Hello" + resp.auth.name);
-        document.getElementById("greet").innerText = "Hi " + resp.auth.name;
+        document.getElementById("greet").innerText = "Hi, " + resp.auth.name;
+        document.getElementById("greet").setAttribute("href","./edititem");
         document.getElementById("usrInfo").hidden = false;
         document.getElementById("register").hidden = true;
         document.getElementById("usrLogin").hidden = true;

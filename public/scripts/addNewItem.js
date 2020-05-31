@@ -30,6 +30,8 @@ document.getElementById('addItemSubmit').addEventListener('click', (event) => {
 		loadingModal.textContent = 'Saving new listing...';
 		$('#LoadingModal1').modal();
 
+
+		console.log(data);
 		fetch('/api/addNewItem', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },

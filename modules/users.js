@@ -27,7 +27,29 @@ var methods = {
 		}
 		mysql.pool.query(usersQuery, returnUsers);
 	},
-
+/*
+	checkEmailExists: function(req, res, complete) {
+		const mysql = require('./dbcon');
+		function returnResult(err, rows, fields) {
+			var queryOut = {};
+			if (err) {
+				queryOut.result = "Error SQL query";
+				queryOut.error = true;
+			}
+			
+			else if(rows.length != 0){
+				queryOut.result = "Email exists!";
+				queryOut.error = true;
+			}else{
+				queryOut.result = "Email okay"
+				queryOut.error = false;
+			}
+			//console.log(queryOut);
+			complete(JSON.stringify(queryOut));
+		}
+		mysql.pool.query('SELECT * FROM Users WHERE userEmail=?', [req.body.newEmail], returnResult);
+	},
+*/
 	// This function receives input from the user registration form. It verifies that the user
 	// does with the email does not exist yet. The user is then saved to the data base.
 	// Registered user is stringified and returned to the calling function so it may be added
@@ -82,7 +104,9 @@ var methods = {
 							email: rows[0].userEmail,
 							password: rows[0].userPassword,
 							name: rows[0].firstName + ' ' + rows[0].lastName,
-							phone: rows[0].userPhone
+							phone: rows[0].userPhone,
+							firstname: rows[0].firstName,
+							lastname: rows[0].lastName,
 						};
 						// Return the new user to the calling function
 						complete(item);
@@ -92,9 +116,51 @@ var methods = {
 			} else {
 				//TODO: Let the user know that they tried to register with an email that already exists in DB
 				console.log('User with this email already exists');
+				complete({error: true, status: 'User with this email already exists!'});
 			}
 		}
 		mysql.pool.query(validate, usrEmail, validateReq);
+	},
+
+	//This function updates user info
+	updateUser: async function(req, res, callback){
+		const pool = require('../modules/dbcon').pool;		
+		//get the existing user info
+		pool.query('SELECT * FROM Users WHERE userID = ?',[req.body.userID], async function(err, rows){
+			if(err){
+				res.send({error:true, status:err});
+			}
+
+			const bcrypt = require('bcrypt');
+
+			// Hash the password
+			let hashedPassword = rows[0].userPassword;
+			if(req.body.password != ""){
+				try {
+					hashedPassword = await bcrypt.hash(req.body.password, 10);
+				} catch (error) {
+					console.log(error);
+					res.send({error:true, status:error});
+				}
+			}
+
+			let newInfo = [
+				req.body.firstname || rows[0].firstName,
+				req.body.lastname || rows[0].lastName,				
+				hashedPassword,
+				req.body.email || rows[0].userEmail,
+				req.body.phone || rows[0].userPhone,
+				rows[0].userID
+			]
+
+			pool.query('UPDATE Users SET firstName = ?, lastName = ?, userPassword = ?, userEmail = ?, userPhone = ? WHERE userID = ?', newInfo, function(err, rows){
+				if(err){
+					res.send({error:true, status:err});
+				}
+				callback();   //run this function after the user has been updated
+				res.send({error:false, status:"User updated successfully!"});
+			});
+		})
 	},
 
 	// Checks if the request is made by an authenticated user

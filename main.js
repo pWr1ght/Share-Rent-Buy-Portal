@@ -67,10 +67,27 @@ app.get('/register', mngUsers.data.checkNotAuthenticated, (req, res) => {
 // Registers and saves user in DB. This function has to stay here because of the global users array. 
 app.post('/register', mngUsers.data.checkNotAuthenticated, async (req, res) => {
 	function complete(input) {
-		users.push(input);
-		res.render('login');
+		if(!input.error){
+			users.push(input);
+			//res.render('login');
+		}
+		res.send(input);	
 	}
 	mngUsers.data.registerUser(req, res, mysql, complete);
+});
+
+/*
+// Check email
+app.post('/checkEmail', mngUsers.data.checkNotAuthenticated, (req,res) =>{
+	function complete(input){
+		res.send(input);
+	}
+	mngUsers.data.checkEmailExists(req, res, complete);
+});
+*/
+
+app.post('/updateUsr', mngUsers.data.checkAuthenticated, async(req, res) => {
+	mngUsers.data.updateUser(req, res, getUser);
 });
 
 // Logs out the user
