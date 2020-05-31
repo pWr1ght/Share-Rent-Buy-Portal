@@ -26,7 +26,7 @@ closestItemSearchFunc = (res, req) => {
 				res.render('displayItems', {
 					searchResult: null,
 					searchName: searchItemName,
-					empty: 'No items within 50 miles'
+					empty: 'No items within x amount miles'
 				});
 				return;
 			}
