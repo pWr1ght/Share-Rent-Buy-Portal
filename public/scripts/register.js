@@ -8,6 +8,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+const phone = document.getElementById("userphone");
+const ph_pattern = phone.getAttribute("pattern");
+var ph_reg_ex = new RegExp(ph_pattern);
+
+function checkPhonePattern() {
+    if(!ph_reg_ex.test(phone.value) && phone.value.length >= 10){
+        document.getElementById("userphone_label").style.color = "red";
+    } else if (ph_reg_ex.test(phone.value) && phone.value.length >= 10){
+        document.getElementById("userphone_label").style.color = "black";
+    }
+}
+
+phone.onkeyup = function () {
+    checkPhonePattern();
+}
+
 const pass_match = document.getElementById("match_password");
 const pass = document.getElementById("edit_password");
 const pattern = pass.getAttribute('pattern');
@@ -31,12 +47,14 @@ function checkPassword() {
         document.getElementById("registerBtn").disabled = false;
         document.getElementById("matchOK").style.display = "block";
         document.getElementById("match_password_label").style.color = "black";
+        document.getElementById("edit_password_label").style.color = "rgb(1, 190, 1)";
         document.getElementById("match_password_label").textContent = "Retype Password"
     }else{
         document.getElementById("registerBtn").disabled = true;
         document.getElementById("matchOK").style.display = "none";
         document.getElementById("match_password_label").style.color = "red";
         document.getElementById("match_password_label").textContent = "Retype Password (Mismatch)"
+        document.getElementById("edit_password_label").style.color = "black";
     }
 }
 
