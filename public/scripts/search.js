@@ -5,10 +5,13 @@ function performSearch(event) {
 	var search = document.getElementById('input_search').value;
 	var lat = document.getElementById('user_lat').value;
 	var long = document.getElementById('user_lon').value;
-	var dist = document.getElementById('input_distance').value;
-	
-	if(dist < 0 || !dist) {
-		dist=50;
+	var dist;
+	if (document.getElementById('input_distance')) {
+		dist = document.getElementById('input_distance').value;
+	}
+
+	if (dist < 0 || !dist) {
+		dist = 50;
 	}
 	if (!search) {
 		return;
